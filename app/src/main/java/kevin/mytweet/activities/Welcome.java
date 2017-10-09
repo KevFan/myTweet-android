@@ -16,21 +16,22 @@ public class Welcome extends AppCompatActivity implements View.OnClickListener {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_welcome);
 
-    Button loginButton = (Button) findViewById(R.id.loginButton);
+    Button loginButton = (Button) findViewById(R.id.welcomeLogin);
     loginButton.setOnClickListener(this);
-    Button signupButton = (Button) findViewById(R.id.signupButton);
+    Button signupButton = (Button) findViewById(R.id.welcomeSignup);
     signupButton.setOnClickListener(this);
   }
 
   @Override
   public void onClick(View view) {
     switch (view.getId()) {
-      case R.id.signupButton:
+      case R.id.welcomeSignup:
 //        Toast.makeText(this, "Welcome Signup Button Pressed", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(this, SignUp.class));
         break;
-      case R.id.loginButton:
-        Toast.makeText(this, "Welcome Login Button Pressed", Toast.LENGTH_SHORT).show();
+      case R.id.welcomeLogin:
+//        Toast.makeText(this, "Welcome Login Button Pressed", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this, Login.class));
         break;
       default:
         Toast.makeText(this, "Welcome - Something is wrong :/ ", Toast.LENGTH_SHORT).show();
