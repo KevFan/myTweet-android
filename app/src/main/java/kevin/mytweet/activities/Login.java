@@ -1,5 +1,6 @@
 package kevin.mytweet.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -32,6 +33,7 @@ public class Login extends AppCompatActivity {
     @Override
     public void onClick(View view) {
       Log.v("MyTweet", "Login User button clicked");
+      startActivity(new Intent(view.getContext(), AddTweet.class));
     }
   };
 }

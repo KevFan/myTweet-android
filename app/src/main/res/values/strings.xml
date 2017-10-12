@@ -8,4 +8,8 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="loginMessage">Enter your name and password \nYou must be registered.</string>
+    <string name="tweetHint">What\'s in your mind?</string>
+    <string name="tweet">Tweet</string>
+    <string name="selectContact">Select Contact</string>
+    <string name="emailTweet">Email Tweet via</string>
 </resources>
