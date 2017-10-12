@@ -7,7 +7,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import kevin.mytweet.R;
+import kevin.mytweet.app.MyTweetApp;
 
 /**
  * Created by kevin on 09/10/2017.
@@ -16,7 +19,7 @@ import kevin.mytweet.R;
 public class Login extends AppCompatActivity {
   private TextView email;
   private TextView password;
-
+  private MyTweetApp app;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,7 @@ public class Login extends AppCompatActivity {
 
     email = (TextView) findViewById(R.id.loginEmail);
     password = (TextView) findViewById(R.id.loginPassword);
+    app = (MyTweetApp) getApplication();
     Button login = (Button) findViewById(R.id.loginUser);
     login.setOnClickListener(loginListener);
   }
@@ -32,8 +36,16 @@ public class Login extends AppCompatActivity {
   private View.OnClickListener loginListener = new View.OnClickListener() {
     @Override
     public void onClick(View view) {
-      Log.v("MyTweet", "Login User button clicked");
-      startActivity(new Intent(view.getContext(), AddTweet.class));
+      String emailString = email.getText().toString();
+      String passwordString = password.getText().toString();
+      if (emailString.isEmpty() || passwordString.isEmpty()) {
+        Toast.makeText(view.getContext(), "Fill in all information to sign in !!", Toast.LENGTH_SHORT).show();
+      } else if (app.successLogin(emailString, passwordString) != null) {
+        startActivity(new Intent(view.getContext(), AddTweet.class));
+        Toast.makeText(view.getContext(), "Login Successful !!", Toast.LENGTH_SHORT).show();
+      } else {
+        Toast.makeText(view.getContext(), "Email/Password incorrect !!", Toast.LENGTH_SHORT).show();
+      }
     }
   };
 }
