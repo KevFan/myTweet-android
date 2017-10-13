@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kevin.mytweet.models.User;
+import static kevin.mytweet.helpers.LogHelpers.info;
 
 /**
  * Created by kevin on 12/10/2017.
@@ -18,7 +19,10 @@ public class MyTweetApp extends Application {
   public void onCreate()
   {
     super.onCreate();
-    Log.v("MyTweet", "MyTweet App Started");
+    info("MyTweet App Started");
+
+    users.add(new User("Homer", "Simpson", "homer@simpson.com", "secret"));
+    users.add(new User("Marge", "Simpson", "marge@simpson.com", "secret"));
   }
 
   public void newUser (User user) {
@@ -30,7 +34,7 @@ public class MyTweetApp extends Application {
     for (User user : users) {
       if (user.email.equals(email) && user.password.equals(password)) {
         registeredUser = user;
-        Log.v("MyTweet", "Logged in: "  + user.toString());
+        info("Logged in: "  + user.toString());
       }
     }
     return registeredUser;
