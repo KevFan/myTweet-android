@@ -48,6 +48,8 @@ public class SignUp extends AppCompatActivity {
       if (firstNameString.isEmpty() || lastNameString.isEmpty() || emailString.isEmpty()
           || passwordString.isEmpty()) {
         Toast.makeText(view.getContext(), "Fill in all information to complete signup", Toast.LENGTH_SHORT).show();
+      } else if (!isValidEmail(emailString)) {
+        Toast.makeText(view.getContext(), "Email is not a valid format", Toast.LENGTH_SHORT).show();
       } else {
         app.newUser(new User(firstNameString, lastNameString, emailString, passwordString));
         Toast.makeText(view.getContext(), "Successfully Registered - Login now to begin", Toast.LENGTH_SHORT).show();
@@ -55,4 +57,9 @@ public class SignUp extends AppCompatActivity {
       }
     }
   };
+
+  // https://stackoverflow.com/questions/31262250/how-to-check-whether-email-is-valid-format-or-not-in-android
+  private boolean isValidEmail(String target) {
+    return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+  }
 }
