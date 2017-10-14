@@ -12,4 +12,7 @@
     <string name="tweet">Tweet</string>
     <string name="selectContact">Select Contact</string>
     <string name="emailTweet">Email Tweet via</string>
+    <string name="menuSettings">Settings</string>
+    <string name="menuTimeLine">Timeline</string>
+    <string name="menuLogout">Logout</string>
 </resources>

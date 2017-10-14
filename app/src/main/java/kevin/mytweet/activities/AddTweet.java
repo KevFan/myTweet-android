@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,6 +50,7 @@ public class AddTweet extends AppCompatActivity implements View.OnClickListener,
     tweetText.addTextChangedListener(this);
   }
 
+  // OnClist Listener
   @Override
   public void onClick(View view) {
     switch (view.getId()) {
@@ -65,6 +69,7 @@ public class AddTweet extends AppCompatActivity implements View.OnClickListener,
     }
   }
 
+  // TextWatcher Listener method implementations
   @Override
   public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -79,5 +84,36 @@ public class AddTweet extends AppCompatActivity implements View.OnClickListener,
 
   @Override
   public void afterTextChanged(Editable s) {
+  }
+
+  // Menu item selector
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item)
+  {
+    switch (item.getItemId())
+    {
+      case R.id.menuTimeLine:
+        Toast.makeText(this, "TimeLine Selected", Toast.LENGTH_SHORT).show();
+        break;
+      case R.id.menuSettings:
+        Toast.makeText(this, "Settings Selected", Toast.LENGTH_SHORT).show();
+        break;
+      case R.id.menuLogout:
+        Toast.makeText(this, "Logout Selected", Toast.LENGTH_SHORT).show();
+        break;
+      default:
+        Toast.makeText(this, "Add Tweet Menu - Something is wrong :(", Toast.LENGTH_SHORT).show();
+        break;
+    }
+    return true;
+  }
+
+  // Menu Item inflater
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    // Inflate the menu items for use in the action bar
+    MenuInflater inflater = getMenuInflater();
+    inflater.inflate(R.menu.menu_tweet, menu);
+    return super.onCreateOptionsMenu(menu);
   }
 }
