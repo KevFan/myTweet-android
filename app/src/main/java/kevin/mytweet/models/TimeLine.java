@@ -21,7 +21,7 @@ public class TimeLine {
 
   public Tweet getTweet(Long id) {
     for (Tweet tweet : tweets) {
-      if (tweet.id == id) {
+      if (tweet.id.equals(id)) {
         return tweet;
       }
     }

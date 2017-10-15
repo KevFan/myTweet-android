@@ -18,6 +18,8 @@ import java.util.Date;
 import static kevin.mytweet.helpers.LogHelpers.info;
 
 import kevin.mytweet.R;
+import kevin.mytweet.app.MyTweetApp;
+import kevin.mytweet.models.Tweet;
 
 /**
  * Created by kevin on 12/10/2017.
@@ -30,6 +32,7 @@ public class AddTweet extends AppCompatActivity implements View.OnClickListener,
   private Button selectContactButton;
   private Button emailViaButton;
   private EditText tweetText;
+  private MyTweetApp app;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,8 @@ public class AddTweet extends AppCompatActivity implements View.OnClickListener,
     emailViaButton.setOnClickListener(this);
     tweetText = (EditText) findViewById(R.id.tweetText);
     tweetText.addTextChangedListener(this);
+
+    app = (MyTweetApp) getApplication();
   }
 
   // OnClist Listener
@@ -55,7 +60,14 @@ public class AddTweet extends AppCompatActivity implements View.OnClickListener,
   public void onClick(View view) {
     switch (view.getId()) {
       case R.id.tweetButton:
-        Toast.makeText(this, "Add Tweet - Tweet Button Pressed", Toast.LENGTH_SHORT).show();
+        String tweetMessage = tweetText.getText().toString();
+        Date date = new Date(tweetDate.getText().toString());
+        if (tweetMessage.isEmpty()) {
+          Toast.makeText(this, "Enter some text to start tweeting !!", Toast.LENGTH_SHORT).show();
+        } else {
+          app.currentUser.timeLine.addTweet(new Tweet(tweetMessage, date));
+          startActivity(new Intent(this, TimeLineActivity.class));
+        }
         break;
       case R.id.selectContactButton:
         Toast.makeText(this, "Add Tweet - Select Contact Button Pressed", Toast.LENGTH_SHORT).show();
