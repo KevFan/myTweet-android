@@ -93,7 +93,8 @@ public class AddTweet extends AppCompatActivity implements View.OnClickListener,
     switch (item.getItemId())
     {
       case R.id.menuTimeLine:
-        Toast.makeText(this, "TimeLine Selected", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "TimeLine Selected", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this, TimeLineActivity.class));
         break;
       case R.id.menuSettings:
         Toast.makeText(this, "Settings Selected", Toast.LENGTH_SHORT).show();
