@@ -6,6 +6,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import kevin.mytweet.models.TimeLine;
 import kevin.mytweet.models.User;
 import static kevin.mytweet.helpers.LogHelpers.info;
 
@@ -15,28 +16,30 @@ import static kevin.mytweet.helpers.LogHelpers.info;
 
 public class MyTweetApp extends Application {
   public List<User> users = new ArrayList<>();
+  public User currentUser = null;
 
   public void onCreate()
   {
     super.onCreate();
     info("MyTweet App Started");
 
-    users.add(new User("Homer", "Simpson", "homer@simpson.com", "secret"));
-    users.add(new User("Marge", "Simpson", "marge@simpson.com", "secret"));
+    users.add(new User("Homer", "Simpson", "homer@simpson.com", "secret", new TimeLine()));
+    users.add(new User("Marge", "Simpson", "marge@simpson.com", "secret", new TimeLine()));
   }
 
   public void newUser (User user) {
     users.add(user);
   }
 
-  public User successLogin(String email, String password) {
+  public boolean successLogin(String email, String password) {
     User registeredUser = null;
     for (User user : users) {
       if (user.email.equals(email) && user.password.equals(password)) {
-        registeredUser = user;
+        currentUser = user;
         info("Logged in: "  + user.toString());
+        return true;
       }
     }
-    return registeredUser;
+    return false;
   }
 }

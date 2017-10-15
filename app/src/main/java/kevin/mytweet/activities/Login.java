@@ -40,7 +40,7 @@ public class Login extends AppCompatActivity {
       String passwordString = password.getText().toString();
       if (emailString.isEmpty() || passwordString.isEmpty()) {
         Toast.makeText(view.getContext(), "Fill in all information to sign in !!", Toast.LENGTH_SHORT).show();
-      } else if (app.successLogin(emailString, passwordString) != null) {
+      } else if (app.successLogin(emailString, passwordString)) {
         startActivity(new Intent(view.getContext(), AddTweet.class));
         Toast.makeText(view.getContext(), "Login Successful !!", Toast.LENGTH_SHORT).show();
       } else {

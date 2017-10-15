@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import kevin.mytweet.R;
 import kevin.mytweet.app.MyTweetApp;
+import kevin.mytweet.models.TimeLine;
 import kevin.mytweet.models.User;
 
 /**
@@ -51,7 +52,7 @@ public class SignUp extends AppCompatActivity {
       } else if (!isValidEmail(emailString)) {
         Toast.makeText(view.getContext(), "Email is not a valid format", Toast.LENGTH_SHORT).show();
       } else {
-        app.newUser(new User(firstNameString, lastNameString, emailString, passwordString));
+        app.newUser(new User(firstNameString, lastNameString, emailString, passwordString, new TimeLine()));
         Toast.makeText(view.getContext(), "Successfully Registered - Login now to begin", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(view.getContext(), Login.class));
       }
