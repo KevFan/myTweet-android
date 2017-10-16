@@ -1,11 +1,13 @@
 package kevin.mytweet.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,7 +23,7 @@ import kevin.mytweet.models.Tweet;
  * Created by kevin on 15/10/2017.
  */
 
-public class TimeLineActivity extends AppCompatActivity {
+public class TimeLineActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
   private ListView listView;
   private TimeLine timeLine;
   private TimeLineAdapter adapter;
@@ -40,6 +42,15 @@ public class TimeLineActivity extends AppCompatActivity {
 
     adapter = new TimeLineAdapter(this, timeLine.tweets);
     listView.setAdapter(adapter);
+    listView.setOnItemClickListener(this);
+  }
+
+  @Override
+  public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    Tweet tweet = adapter.getItem(position);
+    Intent intent = new Intent(this, DetailTweet.class);
+    intent.putExtra("TWEET_ID", tweet.id);
+    startActivity(intent);
   }
 }
 
