@@ -12,7 +12,6 @@ public class TimeLine {
 
   public TimeLine() {
     tweets = new ArrayList<Tweet>();
-    generateTestData();
   }
 
   public void addTweet(Tweet tweet) {
@@ -27,12 +26,5 @@ public class TimeLine {
     }
 
     return null;
-  }
-
-  private void generateTestData() {
-    for (int i = 0; i < 100; i += 1) {
-      Tweet tweet = new Tweet("Test " + i, new Date());
-      addTweet(tweet);
-    }
   }
 }

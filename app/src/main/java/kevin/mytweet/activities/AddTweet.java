@@ -66,6 +66,7 @@ public class AddTweet extends AppCompatActivity implements View.OnClickListener,
           Toast.makeText(this, "Enter some text to start tweeting !!", Toast.LENGTH_SHORT).show();
         } else {
           app.currentUser.timeLine.addTweet(new Tweet(tweetMessage, date));
+          app.save();
           startActivity(new Intent(this, TimeLineActivity.class));
         }
         break;
