@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +13,11 @@ import kevin.mytweet.R;
 import kevin.mytweet.app.MyTweetApp;
 import kevin.mytweet.models.TimeLine;
 import kevin.mytweet.models.Tweet;
+
+import static kevin.mytweet.helpers.ContactHelper.getContact;
+import static kevin.mytweet.helpers.ContactHelper.getEmail;
+import static kevin.mytweet.helpers.ContactHelper.sendEmail;
+import static kevin.mytweet.helpers.IntentHelper.selectContact;
 
 /**
  * Created by kevin on 16/10/2017.
@@ -28,6 +32,8 @@ public class DetailTweet extends AppCompatActivity implements View.OnClickListen
   private TimeLine timeLine;
   private MyTweetApp app;
   private Tweet tweet;
+  private static final int REQUEST_CONTACT = 1;
+  private String emailAddress = "";
 
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -61,13 +67,25 @@ public class DetailTweet extends AppCompatActivity implements View.OnClickListen
   public void onClick(View view) {
     switch (view.getId()) {
       case R.id.detailSelectContactButton:
-        Toast.makeText(this, "Detail Tweet - Select Contact Button Pressed", Toast.LENGTH_SHORT).show();
+        selectContact(this, REQUEST_CONTACT);
         break;
       case R.id.detailEmailViaButton:
-        Toast.makeText(this, "Detail Tweet - Email Via Button Pressed", Toast.LENGTH_SHORT).show();
+        sendEmail(this, emailAddress,
+            getString(R.string.tweet_report_title), tweet.getTweetReport());
         break;
       default:
         Toast.makeText(this, "Detail Tweet - Something is wrong :/ ", Toast.LENGTH_SHORT).show();
+        break;
+    }
+  }
+
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    switch (requestCode) {
+      case REQUEST_CONTACT:
+        String name = getContact(this, data);
+        emailAddress = getEmail(this, data);
+        detailSelectContactButton.setText(name + " : " + emailAddress);
         break;
     }
   }

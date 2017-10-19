@@ -1,7 +1,11 @@
 package kevin.mytweet.models;
 
+import android.content.Context;
+
 import java.util.Date;
 import java.util.Random;
+
+import kevin.mytweet.R;
 
 /**
  * Created by kevin on 13/10/2017.
@@ -28,5 +32,9 @@ public class Tweet {
       rndVal = new Random().nextLong();
     } while (rndVal <= 0);
     return rndVal;
+  }
+
+  public String getTweetReport() {
+    return tweetMessage + "\n\n" + tweetDate.toString();
   }
 }
