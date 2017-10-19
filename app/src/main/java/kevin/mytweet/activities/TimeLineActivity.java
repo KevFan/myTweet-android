@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -18,6 +19,7 @@ import kevin.mytweet.app.MyTweetApp;
 import kevin.mytweet.models.TimeLine;
 import kevin.mytweet.R;
 import kevin.mytweet.models.Tweet;
+import static kevin.mytweet.helpers.IntentHelper.navigateUp;
 
 /**
  * Created by kevin on 15/10/2017.
@@ -29,8 +31,7 @@ public class TimeLineActivity extends AppCompatActivity implements AdapterView.O
   private TimeLineAdapter adapter;
 
   @Override
-  public void onCreate(Bundle savedInstanceState)
-  {
+  public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setTitle(R.string.app_name);
     setContentView(R.layout.activity_timeline);
@@ -43,6 +44,8 @@ public class TimeLineActivity extends AppCompatActivity implements AdapterView.O
     adapter = new TimeLineAdapter(this, timeLine.tweets);
     listView.setAdapter(adapter);
     listView.setOnItemClickListener(this);
+
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
   }
 
   @Override
@@ -51,6 +54,16 @@ public class TimeLineActivity extends AppCompatActivity implements AdapterView.O
     Intent intent = new Intent(this, DetailTweet.class);
     intent.putExtra("TWEET_ID", tweet.id);
     startActivity(intent);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId())
+    {
+      case android.R.id.home:  navigateUp(this);
+        return true;
+    }
+    return super.onOptionsItemSelected(item);
   }
 }
 
