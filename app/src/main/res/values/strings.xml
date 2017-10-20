@@ -16,4 +16,5 @@
     <string name="menuTimeLine">Timeline</string>
     <string name="menuLogout">Logout</string>
     <string name="tweet_report_title">My Latest Tweet</string>
+    <string name="newTweet">New Tweet</string>
 </resources>

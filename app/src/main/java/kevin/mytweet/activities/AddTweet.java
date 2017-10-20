@@ -15,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Date;
+
+import static kevin.mytweet.helpers.IntentHelper.navigateUp;
 import static kevin.mytweet.helpers.LogHelpers.info;
 
 import kevin.mytweet.R;
@@ -99,35 +101,15 @@ public class AddTweet extends AppCompatActivity implements View.OnClickListener,
   public void afterTextChanged(Editable s) {
   }
 
+
   // Menu item selector
   @Override
-  public boolean onOptionsItemSelected(MenuItem item)
-  {
-    switch (item.getItemId())
-    {
-      case R.id.menuTimeLine:
-//        Toast.makeText(this, "TimeLine Selected", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(this, TimeLineActivity.class));
-        break;
-      case R.id.menuSettings:
-        Toast.makeText(this, "Settings Selected", Toast.LENGTH_SHORT).show();
-        break;
-      case R.id.menuLogout:
-        Toast.makeText(this, "Logout Selected", Toast.LENGTH_SHORT).show();
-        break;
-      default:
-        Toast.makeText(this, "Add Tweet Menu - Something is wrong :(", Toast.LENGTH_SHORT).show();
-        break;
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case android.R.id.home:
+        navigateUp(this);
+        return true;
     }
-    return true;
-  }
-
-  // Menu Item inflater
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    // Inflate the menu items for use in the action bar
-    MenuInflater inflater = getMenuInflater();
-    inflater.inflate(R.menu.menu_tweet, menu);
-    return super.onCreateOptionsMenu(menu);
+    return super.onOptionsItemSelected(item);
   }
 }

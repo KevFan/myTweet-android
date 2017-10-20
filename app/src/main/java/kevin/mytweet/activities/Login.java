@@ -41,7 +41,7 @@ public class Login extends AppCompatActivity {
       if (emailString.isEmpty() || passwordString.isEmpty()) {
         Toast.makeText(view.getContext(), "Fill in all information to sign in !!", Toast.LENGTH_SHORT).show();
       } else if (app.successLogin(emailString, passwordString)) {
-        startActivity(new Intent(view.getContext(), AddTweet.class));
+        startActivity(new Intent(view.getContext(), TimeLineActivity.class));
         Toast.makeText(view.getContext(), "Login Successful !!", Toast.LENGTH_SHORT).show();
       } else {
         Toast.makeText(view.getContext(), "Email/Password incorrect !!", Toast.LENGTH_SHORT).show();

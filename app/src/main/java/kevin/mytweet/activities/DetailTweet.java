@@ -7,12 +7,16 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Date;
+
 import kevin.mytweet.R;
 import kevin.mytweet.app.MyTweetApp;
 import kevin.mytweet.models.TimeLine;
@@ -21,6 +25,7 @@ import kevin.mytweet.models.Tweet;
 import static kevin.mytweet.helpers.ContactHelper.getContact;
 import static kevin.mytweet.helpers.ContactHelper.getEmail;
 import static kevin.mytweet.helpers.ContactHelper.sendEmail;
+import static kevin.mytweet.helpers.IntentHelper.navigateUp;
 import static kevin.mytweet.helpers.IntentHelper.selectContact;
 
 /**
@@ -60,6 +65,8 @@ public class DetailTweet extends AppCompatActivity implements View.OnClickListen
     if (tweet != null) {
       updateView(tweet);
     }
+
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
   }
 
   public void updateView(Tweet tweet) {
@@ -108,8 +115,7 @@ public class DetailTweet extends AppCompatActivity implements View.OnClickListen
       //We can request the permission.
       ActivityCompat.requestPermissions(this,
           new String[]{Manifest.permission.READ_CONTACTS}, REQUEST_CONTACT);
-    }
-    else {
+    } else {
       //We already have permission, so go head and read the contact
       readContact();
     }
@@ -129,5 +135,16 @@ public class DetailTweet extends AppCompatActivity implements View.OnClickListen
         }
       }
     }
+  }
+
+  // Menu item selector
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case android.R.id.home:
+        navigateUp(this);
+        return true;
+    }
+    return super.onOptionsItemSelected(item);
   }
 }
