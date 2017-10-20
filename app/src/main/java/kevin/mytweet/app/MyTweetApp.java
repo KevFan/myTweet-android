@@ -35,6 +35,7 @@ import static kevin.mytweet.helpers.LogHelpers.info;
 public class MyTweetApp extends Application {
   public List<User> users = new ArrayList<>();
   public User currentUser = null;
+  protected static MyTweetApp app;
 
   private static final String FILENAME = "myTweetData.json";
 
@@ -42,6 +43,11 @@ public class MyTweetApp extends Application {
     super.onCreate();
     info("MyTweet App Started");
     users = load();
+    app = this;
+  }
+
+  public static MyTweetApp getApp(){
+    return app;
   }
 
   public void newUser (User user) {
