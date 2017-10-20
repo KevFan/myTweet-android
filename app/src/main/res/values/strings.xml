@@ -17,4 +17,5 @@
     <string name="menuLogout">Logout</string>
     <string name="tweet_report_title">My Latest Tweet</string>
     <string name="newTweet">New Tweet</string>
+    <string name="deleteTweet">Delete Tweet</string>
 </resources>

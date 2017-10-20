@@ -27,14 +27,19 @@ import kevin.mytweet.helpers.IntentHelper;
 import kevin.mytweet.models.TimeLine;
 import kevin.mytweet.models.Tweet;
 
+import android.widget.AbsListView;
+import android.view.ActionMode;
+
 /**
  * Created by kevin on 20/10/2017.
  */
 
-public class TimeLineFragment extends ListFragment implements AdapterView.OnItemClickListener {
+public class TimeLineFragment extends ListFragment implements AdapterView.OnItemClickListener, AbsListView.MultiChoiceModeListener {
   private TimeLine timeLine;
   private TimeLineAdapter adapter;
   MyTweetApp app;
+  private ListView listView;
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -51,6 +56,10 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
     View v = super.onCreateView(inflater, parent, savedInstanceState);
+    listView = (ListView) v.findViewById(android.R.id.list);
+    listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+    listView.setMultiChoiceModeListener(this);
+
     return v;
   }
 
@@ -94,7 +103,7 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
 
   // Menu Item inflater
   @Override
-  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater ) {
+  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     // Inflate the menu items for use in the action bar
     super.onCreateOptionsMenu(menu, inflater);
     inflater.inflate(R.menu.menu_tweet, menu);
@@ -132,4 +141,50 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
       return convertView;
     }
   }
+
+  /* ************ MultiChoiceModeListener methods (begin) *********** */
+  @Override
+  public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+    MenuInflater inflater = actionMode.getMenuInflater();
+    inflater.inflate(R.menu.delete_list_context, menu);
+    return true;
+  }
+
+  @Override
+  public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+    return false;
+  }
+
+  @Override
+  public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+    switch (menuItem.getItemId()) {
+      case R.id.menu_item_delete_tweet:
+        deleteTweet(actionMode);
+        return true;
+      default:
+        return false;
+    }
+
+  }
+
+  private void deleteTweet(ActionMode actionMode) {
+    for (int i = adapter.getCount() - 1; i >= 0; i--) {
+      if (listView.isItemChecked(i)) {
+        timeLine.deleteTweet(adapter.getItem(i));
+        app.save();
+      }
+    }
+    actionMode.finish();
+    adapter.notifyDataSetChanged();
+  }
+
+  @Override
+  public void onDestroyActionMode(ActionMode actionMode) {
+  }
+
+  @Override
+  public void onItemCheckedStateChanged(ActionMode actionMode, int position, long id, boolean checked) {
+  }
+
+  /* ************ MultiChoiceModeListener methods (end) *********** */
 }

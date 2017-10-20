@@ -27,4 +27,8 @@ public class TimeLine {
 
     return null;
   }
+
+  public void deleteTweet(Tweet tweet) {
+    tweets.remove(tweet);
+  }
 }

@@ -188,7 +188,7 @@ public class TweetFragment extends Fragment implements View.OnClickListener, Tex
   public void onTextChanged(CharSequence s, int start, int before, int count) {
     int remainingCarCount = 140 - s.toString().length();
     charCount.setText(String.valueOf(remainingCarCount));
-    info(s.toString());
+    tweet.tweetMessage = tweetText.getText().toString();
   }
 
   @Override
