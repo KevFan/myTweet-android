@@ -46,6 +46,8 @@ public class MyTweetApp extends Application {
 
   public void newUser (User user) {
     users.add(user);
+    save();
+    currentUser = user;
   }
 
   public boolean successLogin(String email, String password) {

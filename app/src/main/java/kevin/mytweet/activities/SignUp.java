@@ -53,8 +53,8 @@ public class SignUp extends AppCompatActivity {
         Toast.makeText(view.getContext(), "Email is not a valid format", Toast.LENGTH_SHORT).show();
       } else {
         app.newUser(new User(firstNameString, lastNameString, emailString, passwordString, new TimeLine()));
-        Toast.makeText(view.getContext(), "Successfully Registered - Login now to begin", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(view.getContext(), Login.class));
+        Toast.makeText(view.getContext(), "Successfully Registered", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(view.getContext(), TimeLineActivity.class));
       }
     }
   };
