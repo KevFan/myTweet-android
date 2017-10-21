@@ -71,6 +71,7 @@ public class TweetFragment extends Fragment implements View.OnClickListener, Tex
   public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
     super.onCreateView(inflater, parent, savedInstanceState);
     View v = inflater.inflate(R.layout.fragment_tweet, parent, false);
+    boolean editable = (boolean) getActivity().getIntent().getExtras().getSerializable("VIEW_EDITABLE");
 
     charCount = (TextView) v.findViewById(R.id.charCount);
     tweetDate = (TextView) v.findViewById(R.id.tweetDate);
@@ -84,9 +85,10 @@ public class TweetFragment extends Fragment implements View.OnClickListener, Tex
     tweetText.addTextChangedListener(this);
     updateView(tweet);
 
-    boolean editable = (boolean) getActivity().getIntent().getExtras().getSerializable("VIEW_EDITABLE");
+
     if (!editable) {
-      tweetText.setEnabled(false);
+      tweetText.setEnabled(false); // Set tweet message to read only in view tweets
+      tweetButton.setVisibility(View.GONE); // Remove tweet button in view tweets adding same tweet
     }
     return v;
   }
