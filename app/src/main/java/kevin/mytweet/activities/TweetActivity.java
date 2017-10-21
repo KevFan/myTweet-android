@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import kevin.mytweet.R;
 import kevin.mytweet.fragments.TweetFragment;
 
+import static kevin.mytweet.helpers.LogHelpers.info;
+
 /**
  * Created by kevin on 16/10/2017.
  */
@@ -16,6 +18,7 @@ public class TweetActivity extends AppCompatActivity {
   ActionBar actionBar;
 
   public void onCreate(Bundle savedInstanceState) {
+    info("Tweet Activity created");
     super.onCreate(savedInstanceState);
     setContentView(R.layout.fragment_container);
 

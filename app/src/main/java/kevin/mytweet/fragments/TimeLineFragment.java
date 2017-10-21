@@ -26,6 +26,8 @@ import kevin.mytweet.models.Tweet;
 import android.widget.AbsListView;
 import android.view.ActionMode;
 
+import static kevin.mytweet.helpers.LogHelpers.info;
+
 /**
  * Created by kevin on 20/10/2017.
  */
@@ -38,6 +40,7 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
+    info("TweetLineFragement created");
     super.onCreate(savedInstanceState);
     setHasOptionsMenu(true);
     getActivity().setTitle(R.string.app_name);
@@ -63,7 +66,8 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
   public void onListItemClick(ListView l, View view, int position, long id) {
     Tweet tweet = ((TimeLineAdapter) getListAdapter()).getItem(position);
     Intent intent = new Intent(getActivity(), TweetActivity.class);
-    intent.putExtra(TweetFragment.EXTRA_TWEET_ID, tweet.id);
+//    intent.putExtra(TweetFragment.EXTRA_TWEET_ID, tweet.id);
+    intent.putExtra(TweetFragment.EXTRA_TWEET, tweet);
     intent.putExtra(TweetFragment.EXTRA_VIEW_EDITABLE, false); // Set Edit view to read only
     startActivityForResult(intent, 0);
   }

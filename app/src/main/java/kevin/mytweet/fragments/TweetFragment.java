@@ -23,6 +23,7 @@ import android.widget.Toast;
 import java.util.Date;
 
 import kevin.mytweet.R;
+import kevin.mytweet.activities.TimeLineActivity;
 import kevin.mytweet.app.MyTweetApp;
 import kevin.mytweet.models.TimeLine;
 import kevin.mytweet.models.Tweet;
@@ -39,7 +40,7 @@ import static kevin.mytweet.helpers.LogHelpers.info;
  */
 
 public class TweetFragment extends Fragment implements View.OnClickListener, TextWatcher {
-  public static final String EXTRA_TWEET_ID = "TWEET_ID";
+  public static final String EXTRA_TWEET = "TWEET";
   public static final String EXTRA_VIEW_EDITABLE = "VIEW_EDITABLE";
   private static final int REQUEST_CONTACT = 1;
 
@@ -56,12 +57,14 @@ public class TweetFragment extends Fragment implements View.OnClickListener, Tex
   private Intent data;
 
   public void onCreate(Bundle savedInstanceState) {
+    info("Tweet Fragment created");
     super.onCreate(savedInstanceState);
     app = MyTweetApp.getApp();
     timeLine = app.currentUser.timeLine;
 
-    Long tweetId = (Long) getActivity().getIntent().getExtras().getSerializable("TWEET_ID");
-    tweet = timeLine.getTweet(tweetId);
+//    Long tweetId = (Long) getActivity().getIntent().getExtras().getSerializable("TWEET_ID");
+//    tweet = timeLine.getTweet(tweetId);
+    tweet = (Tweet) getActivity().getIntent().getExtras().getSerializable(EXTRA_TWEET);
   }
 
   @Override
@@ -100,8 +103,10 @@ public class TweetFragment extends Fragment implements View.OnClickListener, Tex
     switch (view.getId()) {
       case R.id.tweetButton:
         tweet.tweetMessage = tweetText.getText().toString();
+        timeLine.addTweet(tweet);
         app.save();
         Toast.makeText(getActivity(), "Message Sent !! ", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(getActivity(), TimeLineActivity.class));
         break;
       case R.id.selectContactButton:
         Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
@@ -167,17 +172,6 @@ public class TweetFragment extends Fragment implements View.OnClickListener, Tex
     }
   }
 
-  // Menu item selector
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case android.R.id.home:
-        navigateUp(getActivity());
-        return true;
-    }
-    return super.onOptionsItemSelected(item);
-  }
-
   // TextWatcher Listener method implementations
   @Override
   public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -194,4 +188,15 @@ public class TweetFragment extends Fragment implements View.OnClickListener, Tex
   @Override
   public void afterTextChanged(Editable s) {
   }
+
+//  @Override
+//  public void onDestroy(){
+//    super.onDestroy();
+//    info("On Stop Fragment");
+//    if (tweet.tweetMessage.equals("")) {
+//      timeLine.deleteTweet(tweet);
+//      info("Tweet was empty - Deleted tweet");
+//    }
+////    app.load()
+//  }
 }
