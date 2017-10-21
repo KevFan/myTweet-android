@@ -15,10 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
-import java.util.Date;
-
 import kevin.mytweet.R;
 import kevin.mytweet.activities.TweetActivity;
 import kevin.mytweet.activities.TimeLineActivity;
@@ -26,7 +23,6 @@ import kevin.mytweet.app.MyTweetApp;
 import kevin.mytweet.helpers.IntentHelper;
 import kevin.mytweet.models.TimeLine;
 import kevin.mytweet.models.Tweet;
-
 import android.widget.AbsListView;
 import android.view.ActionMode;
 
@@ -77,7 +73,6 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.menuTimeLine:
-//        Toast.makeText(this, "TimeLine Selected", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(getActivity(), TimeLineActivity.class));
         break;
       case R.id.menuSettings:
@@ -86,16 +81,8 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
       case R.id.menuLogout:
         Toast.makeText(getActivity(), "Logout Selected", Toast.LENGTH_SHORT).show();
         break;
-      case R.id.menu_item_new_tweet:
-        Tweet tweet = new Tweet("", new Date());
-        timeLine.addTweet(tweet);
-        Intent intent = new Intent(getActivity(), TweetActivity.class);
-        intent.putExtra(TweetFragment.EXTRA_TWEET_ID, tweet.id);
-        intent.putExtra(TweetFragment.EXTRA_VIEW_EDITABLE, true); // Set Edit view to editable
-        startActivityForResult(intent, 0);
-        return true;
       default:
-        Toast.makeText(getActivity(), "Add Tweet Menu - Something is wrong :(", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Time Line Fragment - Something is wrong :(", Toast.LENGTH_SHORT).show();
         break;
     }
     return true;
