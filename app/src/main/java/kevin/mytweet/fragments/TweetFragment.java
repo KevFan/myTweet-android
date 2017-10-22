@@ -104,11 +104,14 @@ public class TweetFragment extends Fragment implements View.OnClickListener, Tex
   public void onClick(View view) {
     switch (view.getId()) {
       case R.id.tweetButton:
-        tweet.tweetMessage = tweetText.getText().toString();
-        timeLine.addTweet(tweet);
-        app.save();
-        Toast.makeText(getActivity(), "Message Sent !! ", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(getActivity(), TimeLineActivity.class));
+        if (tweet.tweetMessage.equals("")) {
+          Toast.makeText(getActivity(), "Write your message to send tweet", Toast.LENGTH_SHORT).show();
+        } else {
+          timeLine.addTweet(tweet);
+          app.save();
+          Toast.makeText(getActivity(), "Message Sent !! ", Toast.LENGTH_SHORT).show();
+          startActivity(new Intent(getActivity(), TimeLineActivity.class));
+        }
         break;
       case R.id.selectContactButton:
         Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
