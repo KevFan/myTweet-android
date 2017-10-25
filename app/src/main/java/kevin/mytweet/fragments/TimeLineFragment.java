@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import kevin.mytweet.R;
 import kevin.mytweet.activities.TweetActivity;
 import kevin.mytweet.activities.TimeLineActivity;
+import kevin.mytweet.activities.Welcome;
 import kevin.mytweet.app.MyTweetApp;
 import kevin.mytweet.helpers.IntentHelper;
 import kevin.mytweet.models.TimeLine;
@@ -96,7 +97,12 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
         Toast.makeText(getActivity(), "Settings Selected", Toast.LENGTH_SHORT).show();
         break;
       case R.id.menuLogout:
-        Toast.makeText(getActivity(), "Logout Selected", Toast.LENGTH_SHORT).show();
+        // Clear entire activity history when logging out so that user can use back button to return
+        // to old activities if a different user sign's in
+        // https://stackoverflow.com/questions/3473168/clear-the-entire-history-stack-and-start-a-new-activity-on-android
+        startActivity(new Intent(getActivity(), Welcome.class)
+            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+        Toast.makeText(getActivity(), "Signing out", Toast.LENGTH_SHORT).show();
         break;
       default:
         Toast.makeText(getActivity(), "Time Line Fragment - Something is wrong :(", Toast.LENGTH_SHORT).show();
@@ -113,6 +119,7 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
     inflater.inflate(R.menu.menu_tweet, menu);
   }
 
+  // Check whenever the fragment is paused if there's no tweets to display the no tweets message or not
   @Override
   public void onPause() {
     super.onPause();
