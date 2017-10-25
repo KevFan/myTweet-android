@@ -37,6 +37,7 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
   private TimeLineAdapter adapter;
   MyTweetApp app;
   private ListView listView;
+  private TextView noTweetMessage;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,11 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
     listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
     listView.setMultiChoiceModeListener(this);
 
+    noTweetMessage = (TextView) getActivity().findViewById(R.id.noTweetsMessage);
+    if (!timeLine.tweets.isEmpty()) {
+      noTweetMessage.setVisibility(View.INVISIBLE);
+    }
+
     return v;
   }
 
@@ -79,6 +85,13 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
       case R.id.menuTimeLine:
         startActivity(new Intent(getActivity(), TimeLineActivity.class));
         break;
+      case R.id.clearTimeLine:
+        timeLine.tweets.clear();
+        app.save();
+        adapter.notifyDataSetChanged();
+        noTweetMessage.setVisibility(View.VISIBLE);
+        Toast.makeText(getActivity(), "All tweets cleared and deleted", Toast.LENGTH_SHORT).show();
+        break;
       case R.id.menuSettings:
         Toast.makeText(getActivity(), "Settings Selected", Toast.LENGTH_SHORT).show();
         break;
@@ -98,6 +111,16 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
     // Inflate the menu items for use in the action bar
     super.onCreateOptionsMenu(menu, inflater);
     inflater.inflate(R.menu.menu_tweet, menu);
+  }
+
+  @Override
+  public void onPause() {
+    super.onPause();
+    if (!timeLine.tweets.isEmpty()) {
+      noTweetMessage.setVisibility(View.INVISIBLE);
+    } else {
+      noTweetMessage.setVisibility(View.VISIBLE);
+    }
   }
 
   @Override

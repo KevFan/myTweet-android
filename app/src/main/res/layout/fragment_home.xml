@@ -15,4 +15,12 @@
         android:tint="@android:color/white"
         app:rippleColor="@android:color/white"
         app:srcCompat="@android:drawable/ic_input_add"/>
+
+    <TextView
+        android:id="@+id/noTweetsMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:gravity="center"
+        android:text="@string/noTweetsMessage"/>
 </FrameLayout>
