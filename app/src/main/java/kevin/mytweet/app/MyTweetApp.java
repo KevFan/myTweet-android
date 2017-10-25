@@ -2,6 +2,8 @@ package kevin.mytweet.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -60,6 +62,14 @@ public class MyTweetApp extends Application {
     for (User user : users) {
       if (user.email.equals(email) && user.password.equals(password)) {
         currentUser = user;
+        // Sets shared preference values to current user
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("firstName", currentUser.firstName);
+        editor.putString("lastName", currentUser.lastName);
+        editor.putString("email", currentUser.email);
+        editor.putString("password", currentUser.password);
+        editor.apply();
         info("Logged in: "  + user.toString());
         return true;
       }
