@@ -104,6 +104,7 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
         // Clear entire activity history when logging out so that user can use back button to return
         // to old activities if a different user sign's in
         // https://stackoverflow.com/questions/3473168/clear-the-entire-history-stack-and-start-a-new-activity-on-android
+        clearPreferenceSettings();
         startActivity(new Intent(getActivity(), Welcome.class)
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
         toastMessage(getActivity(), "Signing out");
@@ -212,4 +213,16 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
   }
 
   /* ************ MultiChoiceModeListener methods (end) *********** */
+
+  public void clearPreferenceSettings() {
+    // Sets shared preference values to current user
+    info("TimeLineFragment - Clearing shared preferences due to sign out");
+    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+    SharedPreferences.Editor editor = prefs.edit();
+    editor.putString("firstName", "");
+    editor.putString("lastName", "");
+    editor.putString("email", "");
+    editor.putString("password", "");
+    editor.apply();
+  }
 }

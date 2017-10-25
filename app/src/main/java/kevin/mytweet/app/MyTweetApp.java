@@ -2,6 +2,7 @@ package kevin.mytweet.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -26,6 +27,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import kevin.mytweet.activities.TimeLineActivity;
 import kevin.mytweet.models.TimeLine;
 import kevin.mytweet.models.User;
 import static kevin.mytweet.helpers.LogHelpers.info;
@@ -46,6 +48,14 @@ public class MyTweetApp extends Application {
     info("MyTweet App Started");
     users = load();
     app = this;
+    // If current user is still logged in, log them in instead of starting welcome activity
+    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+    if (successLogin(prefs.getString("email", null), prefs.getString("password", null))) {
+      info("Logging in previous user: " + prefs.getString("email", null));
+      startActivity(new Intent(this, TimeLineActivity.class));
+    } else {
+      info("No logged in user detected - starting welcome activity");
+    }
   }
 
   public static MyTweetApp getApp(){
@@ -112,6 +122,7 @@ public class MyTweetApp extends Application {
 
   public void setPreferenceSettings() {
     // Sets shared preference values to current user
+    info("MyTweetApp - setting shared preference to current user");
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
     SharedPreferences.Editor editor = prefs.edit();
     editor.putString("firstName", currentUser.firstName);
