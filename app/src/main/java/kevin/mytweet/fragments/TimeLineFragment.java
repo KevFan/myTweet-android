@@ -14,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import java.util.ArrayList;
 import kevin.mytweet.R;
 import kevin.mytweet.activities.TweetActivity;
@@ -27,7 +26,7 @@ import kevin.mytweet.models.Tweet;
 import android.widget.AbsListView;
 import android.view.ActionMode;
 
-import static kevin.mytweet.helpers.LogHelpers.info;
+import static kevin.mytweet.helpers.LogHelpers.*;
 
 /**
  * Created by kevin on 20/10/2017.
@@ -91,10 +90,10 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
         app.save();
         adapter.notifyDataSetChanged();
         noTweetMessage.setVisibility(View.VISIBLE);
-        Toast.makeText(getActivity(), "All tweets cleared and deleted", Toast.LENGTH_SHORT).show();
+        toastMessage(getActivity(), "All tweets cleared and deleted");
         break;
       case R.id.menuSettings:
-        Toast.makeText(getActivity(), "Settings Selected", Toast.LENGTH_SHORT).show();
+        toastMessage(getActivity(), "Settings Selected");
         break;
       case R.id.menuLogout:
         // Clear entire activity history when logging out so that user can use back button to return
@@ -102,10 +101,10 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
         // https://stackoverflow.com/questions/3473168/clear-the-entire-history-stack-and-start-a-new-activity-on-android
         startActivity(new Intent(getActivity(), Welcome.class)
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-        Toast.makeText(getActivity(), "Signing out", Toast.LENGTH_SHORT).show();
+        toastMessage(getActivity(), "Signing out");
         break;
       default:
-        Toast.makeText(getActivity(), "Time Line Fragment - Something is wrong :(", Toast.LENGTH_SHORT).show();
+        toastMessage(getActivity(), "Time Line Fragment - Something is wrong :(");
         break;
     }
     return true;

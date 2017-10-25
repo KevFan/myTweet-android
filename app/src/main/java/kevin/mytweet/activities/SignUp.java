@@ -3,16 +3,16 @@ package kevin.mytweet.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import kevin.mytweet.R;
 import kevin.mytweet.app.MyTweetApp;
 import kevin.mytweet.models.TimeLine;
 import kevin.mytweet.models.User;
+
+import static kevin.mytweet.helpers.LogHelpers.toastMessage;
 
 /**
  * Created by kevin on 09/10/2017.
@@ -48,12 +48,12 @@ public class SignUp extends AppCompatActivity {
       String passwordString = password.getText().toString();
       if (firstNameString.isEmpty() || lastNameString.isEmpty() || emailString.isEmpty()
           || passwordString.isEmpty()) {
-        Toast.makeText(view.getContext(), "Fill in all information to complete signup", Toast.LENGTH_SHORT).show();
+        toastMessage(view.getContext(), "Fill in all information to complete signup");
       } else if (!isValidEmail(emailString)) {
-        Toast.makeText(view.getContext(), "Email is not a valid format", Toast.LENGTH_SHORT).show();
+        toastMessage(view.getContext(), "Email is not a valid format");
       } else {
         app.newUser(new User(firstNameString, lastNameString, emailString, passwordString, new TimeLine()));
-        Toast.makeText(view.getContext(), "Successfully Registered", Toast.LENGTH_SHORT).show();
+        toastMessage(view.getContext(), "Successfully Registered");
         startActivity(new Intent(view.getContext(), TimeLineActivity.class));
       }
     }

@@ -12,15 +12,11 @@ import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.Date;
 
 import kevin.mytweet.R;
 import kevin.mytweet.activities.TimeLineActivity;
@@ -31,9 +27,7 @@ import kevin.mytweet.models.Tweet;
 import static kevin.mytweet.helpers.ContactHelper.getContact;
 import static kevin.mytweet.helpers.ContactHelper.getEmail;
 import static kevin.mytweet.helpers.ContactHelper.sendEmail;
-import static kevin.mytweet.helpers.IntentHelper.navigateUp;
-import static kevin.mytweet.helpers.IntentHelper.selectContact;
-import static kevin.mytweet.helpers.LogHelpers.info;
+import static kevin.mytweet.helpers.LogHelpers.*;
 
 /**
  * Created by kevin on 20/10/2017.
@@ -105,11 +99,11 @@ public class TweetFragment extends Fragment implements View.OnClickListener, Tex
     switch (view.getId()) {
       case R.id.tweetButton:
         if (tweet.tweetMessage.equals("")) {
-          Toast.makeText(getActivity(), "Write your message to send tweet", Toast.LENGTH_SHORT).show();
+          toastMessage(getActivity(), "Write your message to send tweet");
         } else {
           timeLine.addTweet(tweet);
           app.save();
-          Toast.makeText(getActivity(), "Message Sent !! ", Toast.LENGTH_SHORT).show();
+          toastMessage(getActivity(), "Message Sent !! ");
           startActivity(new Intent(getActivity(), TimeLineActivity.class));
         }
         break;
@@ -122,7 +116,7 @@ public class TweetFragment extends Fragment implements View.OnClickListener, Tex
             getString(R.string.tweet_report_title), tweet.getTweetReport());
         break;
       default:
-        Toast.makeText(getActivity(), "Tweet Fragment - Something is wrong :/ ", Toast.LENGTH_SHORT).show();
+        toastMessage(getActivity(), "Tweet Fragment - Something is wrong :/ ");
         break;
     }
   }
@@ -193,15 +187,4 @@ public class TweetFragment extends Fragment implements View.OnClickListener, Tex
   @Override
   public void afterTextChanged(Editable s) {
   }
-
-//  @Override
-//  public void onDestroy(){
-//    super.onDestroy();
-//    info("On Stop Fragment");
-//    if (tweet.tweetMessage.equals("")) {
-//      timeLine.deleteTweet(tweet);
-//      info("Tweet was empty - Deleted tweet");
-//    }
-////    app.load()
-//  }
 }
