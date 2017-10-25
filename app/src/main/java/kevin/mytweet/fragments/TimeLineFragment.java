@@ -1,5 +1,8 @@
 package kevin.mytweet.fragments;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import java.util.ArrayList;
 import kevin.mytweet.R;
+import kevin.mytweet.activities.SettingsActivity;
 import kevin.mytweet.activities.TweetActivity;
 import kevin.mytweet.activities.TimeLineActivity;
 import kevin.mytweet.activities.Welcome;
@@ -93,6 +97,7 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
         toastMessage(getActivity(), "All tweets cleared and deleted");
         break;
       case R.id.menuSettings:
+        startActivity(new Intent(getActivity(), SettingsActivity.class));
         toastMessage(getActivity(), "Settings Selected");
         break;
       case R.id.menuLogout:

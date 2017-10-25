@@ -20,4 +20,8 @@
     <string name="deleteTweet">Delete Tweet</string>
     <string name="clearTimeLine">Clear</string>
     <string name="noTweetsMessage">No tweets to show. Start tweeting to get started !</string>
+    <string name="password_summary">You may set your password here</string>
+    <string name="firstNameSummary">You may set your first name here</string>
+    <string name="lastNameSummary">You may set your last name here</string>
+    <string name="emailSummary">You may set your email here</string>
 </resources>
