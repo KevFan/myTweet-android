@@ -56,20 +56,14 @@ public class MyTweetApp extends Application {
     users.add(user);
     save();
     currentUser = user;
+    setPreferenceSettings();
   }
 
   public boolean successLogin(String email, String password) {
     for (User user : users) {
       if (user.email.equals(email) && user.password.equals(password)) {
         currentUser = user;
-        // Sets shared preference values to current user
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("firstName", currentUser.firstName);
-        editor.putString("lastName", currentUser.lastName);
-        editor.putString("email", currentUser.email);
-        editor.putString("password", currentUser.password);
-        editor.apply();
+        setPreferenceSettings();
         info("Logged in: "  + user.toString());
         return true;
       }
@@ -114,5 +108,16 @@ public class MyTweetApp extends Application {
     }
 
     return users;
+  }
+
+  public void setPreferenceSettings() {
+    // Sets shared preference values to current user
+    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+    SharedPreferences.Editor editor = prefs.edit();
+    editor.putString("firstName", currentUser.firstName);
+    editor.putString("lastName", currentUser.lastName);
+    editor.putString("email", currentUser.email);
+    editor.putString("password", currentUser.password);
+    editor.apply();
   }
 }
