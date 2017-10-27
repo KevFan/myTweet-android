@@ -25,4 +25,6 @@
     <string name="lastNameSummary">You may set your last name here</string>
     <string name="emailSummary">You may set your email here</string>
     <string name="welcome">Welcome to MyTweet. The microblog to use</string>
+    <string name="defaultCount">140</string>
+    <string name="defaultDate">A Date</string>
 </resources>
