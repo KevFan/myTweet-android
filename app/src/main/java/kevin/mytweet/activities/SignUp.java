@@ -3,6 +3,7 @@ package kevin.mytweet.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,6 +13,8 @@ import kevin.mytweet.app.MyTweetApp;
 import kevin.mytweet.models.TimeLine;
 import kevin.mytweet.models.User;
 
+import static kevin.mytweet.helpers.IntentHelper.navigateUp;
+import static kevin.mytweet.helpers.LogHelpers.info;
 import static kevin.mytweet.helpers.LogHelpers.toastMessage;
 
 /**
@@ -37,6 +40,7 @@ public class SignUp extends AppCompatActivity {
     app = (MyTweetApp) getApplication();
     Button signup = (Button) findViewById(R.id.signupMyTweet);
     signup.setOnClickListener(signupListener);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
   }
 
   private View.OnClickListener signupListener = new View.OnClickListener() {
@@ -62,5 +66,17 @@ public class SignUp extends AppCompatActivity {
   // https://stackoverflow.com/questions/31262250/how-to-check-whether-email-is-valid-format-or-not-in-android
   private boolean isValidEmail(String target) {
     return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+  }
+
+  // Menu item selector
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    info("Sign Up Activity - navigated up pressed");
+    switch (item.getItemId()) {
+      case android.R.id.home:
+        navigateUp(this);
+        return true;
+    }
+    return super.onOptionsItemSelected(item);
   }
 }
