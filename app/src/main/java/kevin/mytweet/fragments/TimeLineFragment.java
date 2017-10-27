@@ -160,6 +160,7 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
 
       TextView tweetText = (TextView) convertView.findViewById(R.id.list_item_tweetText);
       tweetText.setText(tweet.tweetMessage);
+      tweetText.setMaxLines(1);
 
       TextView tweetDate = (TextView) convertView.findViewById(R.id.list_item_tweetDate);
       tweetDate.setText(tweet.tweetDate.toString());
