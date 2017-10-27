@@ -4,13 +4,11 @@ import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.view.MenuItem;
 
 import kevin.mytweet.R;
 import kevin.mytweet.app.MyTweetApp;
 import kevin.mytweet.models.User;
 
-import static kevin.mytweet.helpers.IntentHelper.navigateUp;
 import static kevin.mytweet.helpers.LogHelpers.info;
 
 /**
@@ -23,6 +21,7 @@ public class SettingsFragment extends PreferenceFragment
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
+    info("Settings Fragment - created");
     super.onCreate(savedInstanceState);
     addPreferencesFromResource(R.xml.settings);
     setHasOptionsMenu(true);
@@ -63,16 +62,5 @@ public class SettingsFragment extends PreferenceFragment
         info("Settings Fragment - Something went wrong in OnSharedPreferenceChanged :(");
     }
     MyTweetApp.getApp().save();
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case android.R.id.home:
-        navigateUp(getActivity());
-        return true;
-      default:
-        return super.onOptionsItemSelected(item);
-    }
   }
 }
