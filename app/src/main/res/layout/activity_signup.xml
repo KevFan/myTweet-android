@@ -24,7 +24,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/firstName"
-            android:inputType="textPersonName"/>
+            android:inputType="textPersonName"
+            android:drawableStart="@drawable/ic_assignment_ind_black_24dp"
+            android:drawablePadding="15dp"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -46,7 +48,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/lastName"
-            android:inputType="textPersonName"/>
+            android:inputType="textPersonName"
+            android:drawableStart="@drawable/ic_assignment_ind_black_24dp"
+            android:drawablePadding="15dp"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -68,7 +72,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
-            android:inputType="textEmailAddress"/>
+            android:inputType="textEmailAddress"
+            android:drawableStart="@drawable/ic_email_black_24dp"
+            android:drawablePadding="15dp"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -90,7 +96,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword"
+            android:drawableStart="@drawable/ic_lock_black_24dp"
+            android:drawablePadding="15dp"/>
     </android.support.design.widget.TextInputLayout>
 
     <Button
@@ -106,5 +114,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/border_button"
+        android:drawableStart="@drawable/ic_person_add_black_24dp"
+        android:drawablePadding="15dp"
+        android:padding="10dp"/>
 </android.support.constraint.ConstraintLayout>
