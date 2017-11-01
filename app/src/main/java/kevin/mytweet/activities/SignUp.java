@@ -52,6 +52,8 @@ public class SignUp extends BaseActivity {
         toastMessage(view.getContext(), "Fill in all information to complete signup");
       } else if (!isValidEmail(emailString)) {
         toastMessage(view.getContext(), "Email is not a valid format");
+      } else if (isEmailUsed(emailString)) {
+        toastMessage(view.getContext(), "Email already used by another user");
       } else {
         app.newUser(new User(firstNameString, lastNameString, emailString, passwordString, new TimeLine()));
         toastMessage(view.getContext(), "Successfully Registered");
@@ -63,5 +65,14 @@ public class SignUp extends BaseActivity {
   // https://stackoverflow.com/questions/31262250/how-to-check-whether-email-is-valid-format-or-not-in-android
   private boolean isValidEmail(String target) {
     return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+  }
+
+  private boolean isEmailUsed(String email) {
+    for (User user : app.users) {
+      if (user.email.equals(email)) {
+        return true;
+      }
+    }
+    return false;
   }
 }
