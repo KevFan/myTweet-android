@@ -1,14 +1,11 @@
 package kevin.mytweet.models;
 
-import android.content.Context;
-
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Random;
 
-import kevin.mytweet.R;
-
 /**
+ * Tweet model
  * Created by kevin on 13/10/2017.
  */
 
@@ -17,6 +14,12 @@ public class Tweet implements Serializable {
   public Date tweetDate;
   public Long id;
 
+  /**
+   * Tweet constructor
+   *
+   * @param tweetMessage Tweet message
+   * @param tweetDate    Tweet date
+   */
   public Tweet(String tweetMessage, Date tweetDate) {
     this.id = unsignedLong();
     this.tweetMessage = tweetMessage;
@@ -25,6 +28,7 @@ public class Tweet implements Serializable {
 
   /**
    * Generate a long greater than zero
+   *
    * @return Unsigned Long value greater than zero
    */
   private Long unsignedLong() {
@@ -35,6 +39,11 @@ public class Tweet implements Serializable {
     return rndVal;
   }
 
+  /**
+   * Generate string report composed ot the tweet message and tweet date
+   *
+   * @return String of report
+   */
   public String getTweetReport() {
     return tweetMessage + "\n\n" + tweetDate.toString();
   }
