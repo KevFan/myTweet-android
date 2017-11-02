@@ -30,6 +30,7 @@ import static kevin.mytweet.helpers.ContactHelper.sendEmail;
 import static kevin.mytweet.helpers.LogHelpers.*;
 
 /**
+ * Tweet Fragment - used to detail and add tweet
  * Created by kevin on 20/10/2017.
  */
 
@@ -50,6 +51,11 @@ public class TweetFragment extends Fragment implements View.OnClickListener, Tex
   private String emailAddress = "";
   private Intent data;
 
+  /**
+   * Called when fragment is first created
+   *
+   * @param savedInstanceState Bundle with saved data if any
+   */
   public void onCreate(Bundle savedInstanceState) {
     info("Tweet Fragment created");
     super.onCreate(savedInstanceState);
@@ -61,43 +67,60 @@ public class TweetFragment extends Fragment implements View.OnClickListener, Tex
     tweet = (Tweet) getActivity().getIntent().getExtras().getSerializable(EXTRA_TWEET);
   }
 
+  /**
+   * Called to create the view hierarchy associated with the fragment
+   *
+   * @param inflater           Layout inflater
+   * @param parent             Parent view group
+   * @param savedInstanceState Bundle with saved data if any
+   * @return View of the layout
+   */
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
     super.onCreateView(inflater, parent, savedInstanceState);
-    View v = inflater.inflate(R.layout.fragment_tweet, parent, false);
-    boolean editable = (boolean) getActivity().getIntent().getExtras().getSerializable("VIEW_EDITABLE");
-
-    charCount = (TextView) v.findViewById(R.id.charCount);
-    tweetDate = (TextView) v.findViewById(R.id.tweetDate);
-    tweetButton = (Button) v.findViewById(R.id.tweetButton);
+    View view = inflater.inflate(R.layout.fragment_tweet, parent, false);
+    charCount = (TextView) view.findViewById(R.id.charCount);
+    tweetDate = (TextView) view.findViewById(R.id.tweetDate);
+    tweetButton = (Button) view.findViewById(R.id.tweetButton);
     tweetButton.setOnClickListener(this);
-    selectContactButton = (Button) v.findViewById(R.id.selectContactButton);
+    selectContactButton = (Button) view.findViewById(R.id.selectContactButton);
     selectContactButton.setOnClickListener(this);
-    emailViaButton = (Button) v.findViewById(R.id.emailViaButton);
+    emailViaButton = (Button) view.findViewById(R.id.emailViaButton);
     emailViaButton.setOnClickListener(this);
-    tweetText = (EditText) v.findViewById(R.id.tweetText);
+    tweetText = (EditText) view.findViewById(R.id.tweetText);
     tweetText.addTextChangedListener(this);
     updateView(tweet);
 
-
+    // Determine should tweet text is editable or not, remove tweet button if not editable
+    boolean editable = (boolean) getActivity().getIntent().getExtras().getSerializable("VIEW_EDITABLE");
     if (!editable) {
       tweetText.setEnabled(false); // Set tweet message to read only in view tweets
       tweetButton.setVisibility(View.GONE); // Remove tweet button in view tweets adding same tweet
     }
-    return v;
+    return view;
   }
 
-
+  /**
+   * Updates the text view and edit text view with the tweet details
+   *
+   * @param tweet Tweet to update views with
+   */
   public void updateView(Tweet tweet) {
     charCount.setText(String.valueOf(140 - tweet.tweetMessage.length()));
     tweetDate.setText(tweet.tweetDate.toString());
     tweetText.setText(tweet.tweetMessage);
   }
 
+  /**
+   * On click listener for the tweet, select contact and email buttons
+   *
+   * @param view View clicked
+   */
   @Override
   public void onClick(View view) {
     switch (view.getId()) {
       case R.id.tweetButton:
+        // If tweet message is empty
         if (tweet.tweetMessage.equals("")) {
           toastMessage(getActivity(), "Write your message to send tweet");
         } else {
@@ -112,8 +135,7 @@ public class TweetFragment extends Fragment implements View.OnClickListener, Tex
         startActivityForResult(intent, REQUEST_CONTACT);
         break;
       case R.id.emailViaButton:
-        sendEmail(getActivity(), emailAddress,
-            getString(R.string.tweet_report_title), tweet.getTweetReport());
+        sendEmail(getActivity(), emailAddress, getString(R.string.tweet_report_title), tweet.getTweetReport());
         break;
       default:
         toastMessage(getActivity(), "Tweet Fragment - Something is wrong :/ ");
@@ -121,12 +143,22 @@ public class TweetFragment extends Fragment implements View.OnClickListener, Tex
     }
   }
 
+  /**
+   * Receive the result from a previous call to startActivityForResult
+   *
+   * @param requestCode Integer of request code supplied by startActivityForResult
+   * @param resultCode  integer result code
+   * @param data        Intent
+   */
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    // If result code is not an ok result - exit
     if (resultCode != Activity.RESULT_OK) {
       return;
     }
 
+    // If request code is the request contact, set the intent to data passed in and check
+    // for permissions
     switch (requestCode) {
       case REQUEST_CONTACT:
         this.data = data;
@@ -135,13 +167,20 @@ public class TweetFragment extends Fragment implements View.OnClickListener, Tex
     }
   }
 
+  /**
+   * Reads the contact details and sets the email address to the contact email and set select
+   * contact button text with contact name and email
+   */
   private void readContact() {
     String name = getContact(getActivity(), data);
     emailAddress = getEmail(getActivity(), data);
     selectContactButton.setText(name + " : " + emailAddress);
   }
 
-  //https://developer.android.com/training/permissions/requesting.html
+  /**
+   * Check for permission to read contacts
+   * https://developer.android.com/training/permissions/requesting.html
+   */
   private void checkContactsReadPermission() {
     // Here, thisActivity is the current activity
     if (ContextCompat.checkSelfPermission(getActivity(),
@@ -155,10 +194,17 @@ public class TweetFragment extends Fragment implements View.OnClickListener, Tex
     }
   }
 
-  //https://developer.android.com/training/permissions/requesting.html
+  /**
+   * Called after asking for permissions
+   * https://developer.android.com/training/permissions/requesting.html
+   *
+   * @param requestCode  Request code passed in by requestPermissions
+   * @param permissions  requested permissions
+   * @param grantResults result of granting permissions
+   */
   @Override
-  public void onRequestPermissionsResult(int requestCode,
-                                         String permissions[], int[] grantResults) {
+  public void onRequestPermissionsResult(int requestCode, String permissions[],
+                                         int[] grantResults) {
     switch (requestCode) {
       case REQUEST_CONTACT: {
         // If request is cancelled, the result arrays are empty.
@@ -171,12 +217,17 @@ public class TweetFragment extends Fragment implements View.OnClickListener, Tex
     }
   }
 
-  // TextWatcher Listener method implementations
-  @Override
-  public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+  /* ************ TextWatcher Listener methods (begin) *********** */
 
-  }
-
+  /**
+   * Called after text changed - sets the character count to be 140 - character sequence length and
+   * sets the tweet message to be the tweetText
+   *
+   * @param s      Character sequence
+   * @param start  start
+   * @param before before
+   * @param count  count
+   */
   @Override
   public void onTextChanged(CharSequence s, int start, int before, int count) {
     int remainingCarCount = 140 - s.toString().length();
@@ -184,7 +235,17 @@ public class TweetFragment extends Fragment implements View.OnClickListener, Tex
     tweet.tweetMessage = tweetText.getText().toString();
   }
 
+  /**
+   * Method stub to implement TextWatcher Listener interface - unused
+   */
   @Override
   public void afterTextChanged(Editable s) {
+  }
+
+  /**
+   * Method stub to implement TextWatcher Listener interface - unused
+   */
+  @Override
+  public void beforeTextChanged(CharSequence s, int start, int count, int after) {
   }
 }

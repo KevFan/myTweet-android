@@ -1,7 +1,6 @@
 package kevin.mytweet.fragments;
 
 import android.content.SharedPreferences;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.content.Context;
@@ -17,7 +16,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import java.util.ArrayList;
+
 import kevin.mytweet.R;
 import kevin.mytweet.activities.SettingsActivity;
 import kevin.mytweet.activities.TweetActivity;
@@ -27,12 +28,14 @@ import kevin.mytweet.app.MyTweetApp;
 import kevin.mytweet.helpers.IntentHelper;
 import kevin.mytweet.models.TimeLine;
 import kevin.mytweet.models.Tweet;
+
 import android.widget.AbsListView;
 import android.view.ActionMode;
 
 import static kevin.mytweet.helpers.LogHelpers.*;
 
 /**
+ * TimeLine Fragment - lists the user tweets using list fragment and custom adapter
  * Created by kevin on 20/10/2017.
  */
 
@@ -43,6 +46,11 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
   private ListView listView;
   private TextView noTweetMessage;
 
+  /**
+   * Called when fragment is first created
+   *
+   * @param savedInstanceState Bundle with saved data if any
+   */
   @Override
   public void onCreate(Bundle savedInstanceState) {
     info("TweetLineFragement created");
@@ -57,21 +65,38 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
     setListAdapter(adapter);
   }
 
+  /**
+   * Called to create the view hierarchy associated with the fragment
+   *
+   * @param inflater           Layout inflater
+   * @param parent             Parent view group
+   * @param savedInstanceState Bundle with saved data if any
+   * @return View of the layout
+   */
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-    View v = super.onCreateView(inflater, parent, savedInstanceState);
-    listView = (ListView) v.findViewById(android.R.id.list);
+    View view = super.onCreateView(inflater, parent, savedInstanceState);
+    listView = (ListView) view.findViewById(android.R.id.list);
     listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
     listView.setMultiChoiceModeListener(this);
 
+    // If there are tweets, set the no tweets message to invisible
     noTweetMessage = (TextView) getActivity().findViewById(R.id.noTweetsMessage);
     if (!timeLine.tweets.isEmpty()) {
       noTweetMessage.setVisibility(View.INVISIBLE);
     }
 
-    return v;
+    return view;
   }
 
+  /**
+   * Called when an item in the list fragment is clicked
+   *
+   * @param l        list view
+   * @param view     view
+   * @param position position of the item
+   * @param id       id
+   */
   @Override
   public void onListItemClick(ListView l, View view, int position, long id) {
     Tweet tweet = ((TimeLineAdapter) getListAdapter()).getItem(position);
@@ -82,13 +107,21 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
     startActivityForResult(intent, 0);
   }
 
-  // Menu item selector
+  /**
+   * Overflow Menu item selector
+   *
+   * @param item item selected on the menu
+   * @return Boolean value
+   */
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
+      // Starts the TimeLineActivity
+      // TODO: Will likely remove
       case R.id.menuTimeLine:
         startActivity(new Intent(getActivity(), TimeLineActivity.class));
         break;
+      // Deletes all tweets in the timeline of the current user and saves
       case R.id.clearTimeLine:
         timeLine.tweets.clear();
         app.save();
@@ -96,14 +129,15 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
         noTweetMessage.setVisibility(View.VISIBLE);
         toastMessage(getActivity(), "All tweets cleared and deleted");
         break;
+      // Starts the settings activity
       case R.id.menuSettings:
         startActivity(new Intent(getActivity(), SettingsActivity.class));
         toastMessage(getActivity(), "Settings Selected");
         break;
+      // Clear entire activity history when logging out so that user can use back button to return
+      // to old activities if a different user sign's in
+      // https://stackoverflow.com/questions/3473168/clear-the-entire-history-stack-and-start-a-new-activity-on-android
       case R.id.menuLogout:
-        // Clear entire activity history when logging out so that user can use back button to return
-        // to old activities if a different user sign's in
-        // https://stackoverflow.com/questions/3473168/clear-the-entire-history-stack-and-start-a-new-activity-on-android
         clearPreferenceSettings();
         startActivity(new Intent(getActivity(), Welcome.class)
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
@@ -116,15 +150,21 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
     return true;
   }
 
-  // Menu Item inflater
+  /**
+   * Menu Item inflater - inflates the menu items in the overflow menu for use in the action bar
+   *
+   * @param menu     Overflow menu
+   * @param inflater Menu inflater
+   */
   @Override
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-    // Inflate the menu items for use in the action bar
     super.onCreateOptionsMenu(menu, inflater);
     inflater.inflate(R.menu.menu_tweet, menu);
   }
 
-  // Check whenever the fragment is paused if there's no tweets to display the no tweets message or not
+  /**
+   * Whenever the fragment is paused, check should the no tweets message be visible or not
+   */
   @Override
   public void onPause() {
     super.onPause();
@@ -135,20 +175,45 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
     }
   }
 
+  /**
+   * Called on click on item in the list view
+   *
+   * @param parent   Adapter view
+   * @param view     view
+   * @param position position of view
+   * @param id       id
+   */
   @Override
   public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     Tweet tweet = adapter.getItem(position);
     IntentHelper.startActivityWithData(getActivity(), TweetActivity.class, "TWEET_ID", tweet.id);
   }
 
+  /**
+   * Custom adaptor for the timeline fragment to list tweets
+   */
   class TimeLineAdapter extends ArrayAdapter<Tweet> {
     private Context context;
 
-    public TimeLineAdapter(Context context, ArrayList<Tweet> tweets) {
+    /**
+     * TimeLineAdapter constructor
+     *
+     * @param context Context of where the adapter is constructed
+     * @param tweets  Arraylist of tweets
+     */
+    private TimeLineAdapter(Context context, ArrayList<Tweet> tweets) {
       super(context, 0, tweets);
       this.context = context;
     }
 
+    /**
+     * Call list_item_tweet for each tweet in ArrayList to display tweet data at specific position
+     *
+     * @param position    position of tweet item
+     * @param convertView View to reuse
+     * @param parent      View parent of where convert view will be attached
+     * @return View with tweet data at specific position
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
       LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -170,6 +235,14 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
   }
 
   /* ************ MultiChoiceModeListener methods (begin) *********** */
+
+  /**
+   * Called when the action mode is first created and inflates the menu to delete tweets
+   *
+   * @param actionMode Action mode created
+   * @param menu       Menu to inflate
+   * @return Boolean of if action mode was created
+   */
   @Override
   public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
     MenuInflater inflater = actionMode.getMenuInflater();
@@ -177,11 +250,13 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
     return true;
   }
 
-  @Override
-  public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
-    return false;
-  }
-
+  /**
+   * Called on click of the delete tweet button on action bar
+   *
+   * @param actionMode Action mode
+   * @param menuItem   Item clicked
+   * @return Boolean of whether event was handled
+   */
   @Override
   public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
     switch (menuItem.getItemId()) {
@@ -191,9 +266,13 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
       default:
         return false;
     }
-
   }
 
+  /**
+   * Helper method to delete all selected tweets from the MultiChoiceModeListener
+   *
+   * @param actionMode Action mode
+   */
   private void deleteTweet(ActionMode actionMode) {
     for (int i = adapter.getCount() - 1; i >= 0; i--) {
       if (listView.isItemChecked(i)) {
@@ -205,16 +284,33 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
     adapter.notifyDataSetChanged();
   }
 
+  /**
+   * Method stub to implement MultiChoiceModeListener interface - unused
+   */
+  @Override
+  public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+    return false;
+  }
+
+  /**
+   * Method stub to implement MultiChoiceModeListener interface - unused
+   */
   @Override
   public void onDestroyActionMode(ActionMode actionMode) {
   }
 
+  /**
+   * Method stub to implement MultiChoiceModeListener interface - unused
+   */
   @Override
   public void onItemCheckedStateChanged(ActionMode actionMode, int position, long id, boolean checked) {
   }
 
   /* ************ MultiChoiceModeListener methods (end) *********** */
 
+  /**
+   * Clears the shared preference setiings of the current user details - used in user log out
+   */
   public void clearPreferenceSettings() {
     // Sets shared preference values to current user
     info("TimeLineFragment - Clearing shared preferences due to sign out");
