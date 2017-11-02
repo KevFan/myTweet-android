@@ -13,6 +13,10 @@ import static kevin.mytweet.helpers.LogHelpers.info;
  */
 
 public class BaseActivity extends AppCompatActivity {
+  /**
+   * Called when activity is first created
+   * @param savedInstanceState Bundle with saved data if any
+   */
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -20,7 +24,11 @@ public class BaseActivity extends AppCompatActivity {
     info("Base Activity - Created");
   }
 
-  // Menu item selector
+  /**
+   * Menu Item selector - only used for navigate up to previous activity here
+   * @param item Menu item
+   * @return Boolean
+   */
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     info("Base Activity - navigated up pressed");

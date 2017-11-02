@@ -13,6 +13,7 @@ import static kevin.mytweet.helpers.LogHelpers.info;
 import static kevin.mytweet.helpers.LogHelpers.toastMessage;
 
 /**
+ * Login Activity to log in a user
  * Created by kevin on 09/10/2017.
  */
 
@@ -21,6 +22,10 @@ public class Login extends BaseActivity {
   private TextView password;
   private MyTweetApp app;
 
+  /**
+   * Called when activity is first created
+   * @param savedInstanceState Bundle with saved data if any
+   */
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     info("Login Activity created");
@@ -34,6 +39,10 @@ public class Login extends BaseActivity {
     login.setOnClickListener(loginListener);
   }
 
+  /**
+   * Anonymous class listener for the login button
+   * Checks for all fields are filled, and starts the timeline activity is credentials are valid
+   */
   private View.OnClickListener loginListener = new View.OnClickListener() {
     @Override
     public void onClick(View view) {

@@ -15,6 +15,7 @@ import static kevin.mytweet.helpers.LogHelpers.info;
 import static kevin.mytweet.helpers.LogHelpers.toastMessage;
 
 /**
+ * Sign up Activity to register a new user
  * Created by kevin on 09/10/2017.
  */
 
@@ -25,6 +26,10 @@ public class SignUp extends BaseActivity {
   private TextView password;
   private MyTweetApp app;
 
+  /**
+   * Called when activity is first created
+   * @param savedInstanceState Bundle with saved data if any
+   */
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     info("SignUp Activity - Created");
@@ -40,6 +45,11 @@ public class SignUp extends BaseActivity {
     signup.setOnClickListener(signupListener);
   }
 
+  /**
+   * Anonymous class listener for the login button
+   * Checks for all fields are filled, if the email is in a valid email format and whether the email
+   * is already used before signing up. Starts TimeLineActivity if successfully registered
+   */
   private View.OnClickListener signupListener = new View.OnClickListener() {
     @Override
     public void onClick(View view) {
@@ -62,11 +72,21 @@ public class SignUp extends BaseActivity {
     }
   };
 
-  // https://stackoverflow.com/questions/31262250/how-to-check-whether-email-is-valid-format-or-not-in-android
+  /**
+   * Checks string is in a valid email format
+   * https://stackoverflow.com/questions/31262250/how-to-check-whether-email-is-valid-format-or-not-in-android
+   * @param target String to check
+   * @return Boolean of if target string passed is in a valid email format
+   */
   private boolean isValidEmail(String target) {
     return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
   }
 
+  /**
+   * Check is email already used by a user
+   * @param email email to check for
+   * @return Boolean of if email is already used
+   */
   private boolean isEmailUsed(String email) {
     for (User user : app.users) {
       if (user.email.equals(email)) {
