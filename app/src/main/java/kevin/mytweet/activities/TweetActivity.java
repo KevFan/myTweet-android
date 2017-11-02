@@ -11,12 +11,17 @@ import kevin.mytweet.fragments.TweetFragment;
 import static kevin.mytweet.helpers.LogHelpers.info;
 
 /**
+ * Tweet Activity
  * Created by kevin on 16/10/2017.
  */
 
 public class TweetActivity extends BaseActivity {
   ActionBar actionBar;
 
+  /**
+   * Called when activity is first created - creates tweet fragment if savedBundleInstance is null
+   * @param savedInstanceState Bundle with saved data if any
+   */
   public void onCreate(Bundle savedInstanceState) {
     info("Tweet Activity created");
     super.onCreate(savedInstanceState);

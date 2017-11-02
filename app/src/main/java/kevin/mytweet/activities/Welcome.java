@@ -10,8 +10,16 @@ import kevin.mytweet.R;
 
 import static kevin.mytweet.helpers.LogHelpers.toastMessage;
 
+/**
+ * Welcome Activity
+ */
+
 public class Welcome extends AppCompatActivity implements View.OnClickListener {
 
+  /**
+   * Called when activity is first created
+   * @param savedInstanceState Bundle with saved data if any
+   */
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -23,6 +31,10 @@ public class Welcome extends AppCompatActivity implements View.OnClickListener {
     signupButton.setOnClickListener(this);
   }
 
+  /**
+   * On click listener for the login and sign up buttons in view
+   * @param view View to listen to
+   */
   @Override
   public void onClick(View view) {
     switch (view.getId()) {
