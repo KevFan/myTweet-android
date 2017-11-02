@@ -1,9 +1,5 @@
 package kevin.mytweet.helpers;
 
-/**
- * Created by kevin on 19/10/2017.
- */
-
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -11,24 +7,19 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.content.ContentResolver;
 
+/**
+ * Contact Helper methods
+ * Created by kevin on 19/10/2017.
+ */
 
 public class ContactHelper {
-  public static String getDisplayName(Context context, Intent data) {
-    String contact = "unable to find contact";
-    Uri contactUri = data.getData();
-    String[] queryFields = new String[]{ContactsContract.Contacts.DISPLAY_NAME};
-    Cursor c = context.getContentResolver().query(contactUri, queryFields, null, null, null);
-    if (c.getCount() == 0) {
-      c.close();
-      return contact;
-    }
-    c.moveToFirst();
-    contact = c.getString(0);
-    c.close();
-
-    return contact;
-  }
-
+  /**
+   * Gets the contact email
+   *
+   * @param context Context of where method was called
+   * @param data    Data passes in through intent
+   * @return String on contact email
+   */
   public static String getEmail(Context context, Intent data) {
     String email = "no email";
 
@@ -52,6 +43,13 @@ public class ContactHelper {
     return email;
   }
 
+  /**
+   * Gets the contact name
+   *
+   * @param context Context of where method was called
+   * @param data    Data passes in through intent
+   * @return String on contact name
+   */
   public static String getContact(Context context, Intent data) {
     String contact = "unable to find contact";
     Uri contactUri = data.getData();
@@ -68,11 +66,18 @@ public class ContactHelper {
     return contact;
   }
 
+  /**
+   * Calls intent to send email, passing email, subject and email body
+   *
+   * @param context Context of whether the method was called from
+   * @param email   email to send to
+   * @param subject subject of email
+   * @param body    body of email
+   */
   public static void sendEmail(Context context, String email, String subject, String body) {
     Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", email, null));
     emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
     emailIntent.putExtra(Intent.EXTRA_TEXT, body);
     context.startActivity(Intent.createChooser(emailIntent, "Sending Email"));
   }
-
 }
