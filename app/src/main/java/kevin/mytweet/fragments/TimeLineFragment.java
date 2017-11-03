@@ -20,7 +20,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import kevin.mytweet.R;
-import kevin.mytweet.activities.DetailTweetActivity;
+import kevin.mytweet.activities.DetailTweetPagerActivity;
 import kevin.mytweet.activities.SettingsActivity;
 import kevin.mytweet.activities.TimeLineActivity;
 import kevin.mytweet.activities.Welcome;
@@ -100,7 +100,7 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
   @Override
   public void onListItemClick(ListView l, View view, int position, long id) {
     Tweet tweet = ((TimeLineAdapter) getListAdapter()).getItem(position);
-    Intent intent = new Intent(getActivity(), DetailTweetActivity.class);
+    Intent intent = new Intent(getActivity(), DetailTweetPagerActivity.class);
 //    intent.putExtra(DetailTweetFragment.EXTRA_TWEET_ID, tweet.id);
     intent.putExtra(DetailTweetFragment.EXTRA_TWEET, tweet);
     intent.putExtra(DetailTweetFragment.EXTRA_VIEW_EDITABLE, false); // Set Edit view to read only
@@ -186,7 +186,8 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
   @Override
   public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     Tweet tweet = adapter.getItem(position);
-    IntentHelper.startActivityWithData(getActivity(), DetailTweetActivity.class, DetailTweetFragment.EXTRA_TWEET, tweet);
+    IntentHelper.startActivityWithData(getActivity(), DetailTweetPagerActivity.class,
+        DetailTweetFragment.EXTRA_TWEET, tweet);
   }
 
   /**

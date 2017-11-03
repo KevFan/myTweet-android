@@ -60,7 +60,7 @@ public class DetailTweetFragment extends Fragment implements View.OnClickListene
 
 //    Long tweetId = (Long) getActivity().getIntent().getExtras().getSerializable("TWEET_ID");
 //    tweet = timeLine.getTweet(tweetId);
-    tweet = (Tweet) getActivity().getIntent().getExtras().getSerializable(EXTRA_TWEET);
+    tweet = (Tweet) getArguments().getSerializable(EXTRA_TWEET);
   }
 
   /**
