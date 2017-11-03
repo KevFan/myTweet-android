@@ -32,7 +32,7 @@ import static kevin.mytweet.helpers.LogHelpers.*;
  */
 
 public class DetailTweetFragment extends Fragment implements View.OnClickListener {
-  public static final String EXTRA_TWEET = "TWEET";
+  public static final String EXTRA_TWEET_ID = "TWEET_ID";
   public static final String EXTRA_VIEW_EDITABLE = "VIEW_EDITABLE";
   private static final int REQUEST_CONTACT = 1;
 
@@ -58,9 +58,8 @@ public class DetailTweetFragment extends Fragment implements View.OnClickListene
     app = MyTweetApp.getApp();
     timeLine = app.currentUser.timeLine;
 
-//    Long tweetId = (Long) getActivity().getIntent().getExtras().getSerializable("TWEET_ID");
-//    tweet = timeLine.getTweet(tweetId);
-    tweet = (Tweet) getArguments().getSerializable(EXTRA_TWEET);
+    Long tweetId = (Long) getArguments().getSerializable(EXTRA_TWEET_ID);
+    tweet = timeLine.getTweet(tweetId);
   }
 
   /**

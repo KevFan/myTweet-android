@@ -49,9 +49,9 @@ public class DetailTweetPagerActivity extends BaseActivity {
    * Ensure selected tweet is shown in detail tweet view
    */
   private void setCurrentItem() {
-    Tweet tweet = (Tweet) getIntent().getSerializableExtra(DetailTweetFragment.EXTRA_TWEET);
+    Long tweetId = (Long) getIntent().getSerializableExtra(DetailTweetFragment.EXTRA_TWEET_ID);
     for (int i = 0; i < tweetArrayList.size(); i++) {
-      if (tweetArrayList.get(i).equals(tweet)) {
+      if (tweetArrayList.get(i).id.equals(tweetId)) {
         viewPager.setCurrentItem(i);
         break;
       }
@@ -95,7 +95,7 @@ public class DetailTweetPagerActivity extends BaseActivity {
     public Fragment getItem(int position) {
       Tweet tweet = tweetArrayList.get(position);
       Bundle args = new Bundle();
-      args.putSerializable(DetailTweetFragment.EXTRA_TWEET, tweet);
+      args.putSerializable(DetailTweetFragment.EXTRA_TWEET_ID, tweet.id);
       DetailTweetFragment fragment = new DetailTweetFragment();
       fragment.setArguments(args);
       return fragment;
