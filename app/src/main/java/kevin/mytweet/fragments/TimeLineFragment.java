@@ -102,7 +102,6 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
     Tweet tweet = ((TimeLineAdapter) getListAdapter()).getItem(position);
     Intent intent = new Intent(getActivity(), DetailTweetPagerActivity.class);
     intent.putExtra(DetailTweetFragment.EXTRA_TWEET_ID, tweet.id);
-    intent.putExtra(DetailTweetFragment.EXTRA_VIEW_EDITABLE, false); // Set Edit view to read only
     startActivityForResult(intent, 0);
   }
 

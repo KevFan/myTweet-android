@@ -1,14 +1,8 @@
 package kevin.mytweet.fragments;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -22,12 +16,8 @@ import java.util.Date;
 
 import kevin.mytweet.R;
 import kevin.mytweet.activities.TimeLineActivity;
-import kevin.mytweet.app.MyTweetApp;
-import kevin.mytweet.models.TimeLine;
 import kevin.mytweet.models.Tweet;
 
-import static kevin.mytweet.helpers.ContactHelper.getContact;
-import static kevin.mytweet.helpers.ContactHelper.getEmail;
 import static kevin.mytweet.helpers.ContactHelper.sendEmail;
 import static kevin.mytweet.helpers.LogHelpers.info;
 import static kevin.mytweet.helpers.LogHelpers.toastMessage;
@@ -37,20 +27,11 @@ import static kevin.mytweet.helpers.LogHelpers.toastMessage;
  * Created by kevin on 20/10/2017.
  */
 
-public class AddTweetFragment extends Fragment implements View.OnClickListener, TextWatcher {
-  private static final int REQUEST_CONTACT = 1;
+public class AddTweetFragment extends BaseTweetFragment implements View.OnClickListener, TextWatcher {
 
   private TextView charCount;
   private TextView tweetDate;
-  private Button tweetButton;
-  private Button selectContactButton;
-  private Button emailViaButton;
   private EditText tweetText;
-  private TimeLine timeLine;
-  private MyTweetApp app;
-  private Tweet tweet;
-  private String emailAddress = "";
-  private Intent data;
 
   /**
    * Called when fragment is first created
@@ -58,10 +39,8 @@ public class AddTweetFragment extends Fragment implements View.OnClickListener, 
    * @param savedInstanceState Bundle with saved data if any
    */
   public void onCreate(Bundle savedInstanceState) {
-    info("Tweet Fragment created");
+    info("Add Tweet Fragment created");
     super.onCreate(savedInstanceState);
-    app = MyTweetApp.getApp();
-    timeLine = app.currentUser.timeLine;
     tweet = new Tweet("", new Date());
   }
 
@@ -79,15 +58,12 @@ public class AddTweetFragment extends Fragment implements View.OnClickListener, 
     View view = inflater.inflate(R.layout.fragment_add_tweet, parent, false);
     charCount = (TextView) view.findViewById(R.id.charCount);
     tweetDate = (TextView) view.findViewById(R.id.tweetDate);
-    tweetButton = (Button) view.findViewById(R.id.tweetButton);
-    tweetButton.setOnClickListener(this);
-    selectContactButton = (Button) view.findViewById(R.id.selectContactButton);
-    selectContactButton.setOnClickListener(this);
-    emailViaButton = (Button) view.findViewById(R.id.emailViaButton);
-    emailViaButton.setOnClickListener(this);
     tweetText = (EditText) view.findViewById(R.id.tweetText);
     tweetText.addTextChangedListener(this);
     updateView(tweet);
+    setListeners(view);
+    // Set BaseTweetFragment buttonId to selectContactButton R id to get correct button
+    buttonId = R.id.selectContactButton;
     return view;
   }
 
@@ -99,6 +75,21 @@ public class AddTweetFragment extends Fragment implements View.OnClickListener, 
   public void updateView(Tweet tweet) {
     tweetDate.setText(tweet.tweetDate.toString());
     tweetText.setText(tweet.tweetMessage);
+  }
+
+  /**
+   * Helper to set listeners on fragment view
+   *
+   * @param view Fragment view
+   */
+  public void setListeners(View view) {
+    Button tweetButton = (Button) view.findViewById(R.id.tweetButton);
+    Button selectContactButton = (Button) view.findViewById(R.id.selectContactButton);
+    Button emailViaButton = (Button) view.findViewById(R.id.emailViaButton);
+
+    tweetButton.setOnClickListener(this);
+    selectContactButton.setOnClickListener(this);
+    emailViaButton.setOnClickListener(this);
   }
 
   /**
@@ -128,82 +119,8 @@ public class AddTweetFragment extends Fragment implements View.OnClickListener, 
         sendEmail(getActivity(), emailAddress, getString(R.string.tweet_report_title), tweet.getTweetReport());
         break;
       default:
-        toastMessage(getActivity(), "Tweet Fragment - Something is wrong :/ ");
+        toastMessage(getActivity(), "Add Tweet Fragment - Something is wrong :/ ");
         break;
-    }
-  }
-
-  /**
-   * Receive the result from a previous call to startActivityForResult
-   *
-   * @param requestCode Integer of request code supplied by startActivityForResult
-   * @param resultCode  integer result code
-   * @param data        Intent
-   */
-  @Override
-  public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    // If result code is not an ok result - exit
-    if (resultCode != Activity.RESULT_OK) {
-      return;
-    }
-
-    // If request code is the request contact, set the intent to data passed in and check
-    // for permissions
-    switch (requestCode) {
-      case REQUEST_CONTACT:
-        this.data = data;
-        checkContactsReadPermission();
-        break;
-    }
-  }
-
-  /**
-   * Reads the contact details and sets the email address to the contact email and set select
-   * contact button text with contact name and email
-   */
-  private void readContact() {
-    String name = getContact(getActivity(), data);
-    emailAddress = getEmail(getActivity(), data);
-    selectContactButton.setText(name + " : " + emailAddress);
-  }
-
-  /**
-   * Check for permission to read contacts
-   * https://developer.android.com/training/permissions/requesting.html
-   */
-  private void checkContactsReadPermission() {
-    // Here, thisActivity is the current activity
-    if (ContextCompat.checkSelfPermission(getActivity(),
-        Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-      //We can request the permission.
-      ActivityCompat.requestPermissions(getActivity(),
-          new String[]{Manifest.permission.READ_CONTACTS}, REQUEST_CONTACT);
-    } else {
-      //We already have permission, so go head and read the contact
-      readContact();
-    }
-  }
-
-  /**
-   * Called after asking for permissions
-   * https://developer.android.com/training/permissions/requesting.html
-   *
-   * @param requestCode  Request code passed in by requestPermissions
-   * @param permissions  requested permissions
-   * @param grantResults result of granting permissions
-   */
-  @Override
-  public void onRequestPermissionsResult(int requestCode, String permissions[],
-                                         int[] grantResults) {
-    switch (requestCode) {
-      case REQUEST_CONTACT: {
-        // If request is cancelled, the result arrays are empty.
-        if (grantResults.length > 0
-            && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-          // permission was granted
-          readContact();
-        }
-      }
     }
   }
 
