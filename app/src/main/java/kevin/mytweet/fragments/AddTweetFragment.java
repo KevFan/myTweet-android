@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.Date;
+
 import kevin.mytweet.R;
 import kevin.mytweet.activities.TimeLineActivity;
 import kevin.mytweet.app.MyTweetApp;
@@ -27,16 +29,15 @@ import kevin.mytweet.models.Tweet;
 import static kevin.mytweet.helpers.ContactHelper.getContact;
 import static kevin.mytweet.helpers.ContactHelper.getEmail;
 import static kevin.mytweet.helpers.ContactHelper.sendEmail;
-import static kevin.mytweet.helpers.LogHelpers.*;
+import static kevin.mytweet.helpers.LogHelpers.info;
+import static kevin.mytweet.helpers.LogHelpers.toastMessage;
 
 /**
  * Tweet Fragment - used to detail and add tweet
  * Created by kevin on 20/10/2017.
  */
 
-public class TweetFragment extends Fragment implements View.OnClickListener, TextWatcher {
-  public static final String EXTRA_TWEET = "TWEET";
-  public static final String EXTRA_VIEW_EDITABLE = "VIEW_EDITABLE";
+public class AddTweetFragment extends Fragment implements View.OnClickListener, TextWatcher {
   private static final int REQUEST_CONTACT = 1;
 
   private TextView charCount;
@@ -61,10 +62,7 @@ public class TweetFragment extends Fragment implements View.OnClickListener, Tex
     super.onCreate(savedInstanceState);
     app = MyTweetApp.getApp();
     timeLine = app.currentUser.timeLine;
-
-//    Long tweetId = (Long) getActivity().getIntent().getExtras().getSerializable("TWEET_ID");
-//    tweet = timeLine.getTweet(tweetId);
-    tweet = (Tweet) getActivity().getIntent().getExtras().getSerializable(EXTRA_TWEET);
+    tweet = new Tweet("", new Date());
   }
 
   /**
@@ -78,7 +76,7 @@ public class TweetFragment extends Fragment implements View.OnClickListener, Tex
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
     super.onCreateView(inflater, parent, savedInstanceState);
-    View view = inflater.inflate(R.layout.fragment_tweet, parent, false);
+    View view = inflater.inflate(R.layout.fragment_add_tweet, parent, false);
     charCount = (TextView) view.findViewById(R.id.charCount);
     tweetDate = (TextView) view.findViewById(R.id.tweetDate);
     tweetButton = (Button) view.findViewById(R.id.tweetButton);
@@ -90,13 +88,6 @@ public class TweetFragment extends Fragment implements View.OnClickListener, Tex
     tweetText = (EditText) view.findViewById(R.id.tweetText);
     tweetText.addTextChangedListener(this);
     updateView(tweet);
-
-    // Determine should tweet text is editable or not, remove tweet button if not editable
-    boolean editable = (boolean) getActivity().getIntent().getExtras().getSerializable("VIEW_EDITABLE");
-    if (!editable) {
-      tweetText.setEnabled(false); // Set tweet message to read only in view tweets
-      tweetButton.setVisibility(View.GONE); // Remove tweet button in view tweets adding same tweet
-    }
     return view;
   }
 
@@ -106,7 +97,6 @@ public class TweetFragment extends Fragment implements View.OnClickListener, Tex
    * @param tweet Tweet to update views with
    */
   public void updateView(Tweet tweet) {
-    charCount.setText(String.valueOf(140 - tweet.tweetMessage.length()));
     tweetDate.setText(tweet.tweetDate.toString());
     tweetText.setText(tweet.tweetMessage);
   }

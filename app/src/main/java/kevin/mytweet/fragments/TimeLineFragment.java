@@ -20,8 +20,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import kevin.mytweet.R;
+import kevin.mytweet.activities.DetailTweetActivity;
 import kevin.mytweet.activities.SettingsActivity;
-import kevin.mytweet.activities.TweetActivity;
 import kevin.mytweet.activities.TimeLineActivity;
 import kevin.mytweet.activities.Welcome;
 import kevin.mytweet.app.MyTweetApp;
@@ -100,10 +100,10 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
   @Override
   public void onListItemClick(ListView l, View view, int position, long id) {
     Tweet tweet = ((TimeLineAdapter) getListAdapter()).getItem(position);
-    Intent intent = new Intent(getActivity(), TweetActivity.class);
-//    intent.putExtra(TweetFragment.EXTRA_TWEET_ID, tweet.id);
-    intent.putExtra(TweetFragment.EXTRA_TWEET, tweet);
-    intent.putExtra(TweetFragment.EXTRA_VIEW_EDITABLE, false); // Set Edit view to read only
+    Intent intent = new Intent(getActivity(), DetailTweetActivity.class);
+//    intent.putExtra(DetailTweetFragment.EXTRA_TWEET_ID, tweet.id);
+    intent.putExtra(DetailTweetFragment.EXTRA_TWEET, tweet);
+    intent.putExtra(DetailTweetFragment.EXTRA_VIEW_EDITABLE, false); // Set Edit view to read only
     startActivityForResult(intent, 0);
   }
 
@@ -186,7 +186,7 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
   @Override
   public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     Tweet tweet = adapter.getItem(position);
-    IntentHelper.startActivityWithData(getActivity(), TweetActivity.class, "TWEET_ID", tweet.id);
+    IntentHelper.startActivityWithData(getActivity(), DetailTweetActivity.class, DetailTweetFragment.EXTRA_TWEET, tweet);
   }
 
   /**
