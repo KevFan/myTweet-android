@@ -17,7 +17,7 @@ import static kevin.mytweet.helpers.LogHelpers.info;
 public class AddTweetActivity extends BaseActivity {
   /**
    * Called when activity is first created
-   * Creates the settings fragment if savedInstanceState is null
+   * Creates the add tweet fragment if savedInstanceState is null
    * @param savedInstanceState Bundle with saved data if any
    */
   @Override

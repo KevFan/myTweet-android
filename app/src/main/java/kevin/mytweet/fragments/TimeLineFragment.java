@@ -117,11 +117,6 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
-      // Starts the TimeLineActivity
-      // TODO: Will likely remove
-      case R.id.menuTimeLine:
-        startActivity(new Intent(getActivity(), TimeLineActivity.class));
-        break;
       // Deletes all tweets in the timeline of the current user and saves
       case R.id.clearTimeLine:
         // Dialog box to confirm delete tweets
@@ -147,7 +142,6 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
             .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
               public void onClick(DialogInterface dialog, int which) {
                 // do nothing
-                toastMessage(getActivity(), "Tweets not deleted");
               }
             })
             .setIcon(android.R.drawable.ic_dialog_alert)
@@ -156,7 +150,6 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
       // Starts the settings activity
       case R.id.menuSettings:
         startActivity(new Intent(getActivity(), SettingsActivity.class));
-        toastMessage(getActivity(), "Settings Selected");
         break;
       // Clear entire activity history when logging out so that user can use back button to return
       // to old activities if a different user sign's in
@@ -168,7 +161,7 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
         toastMessage(getActivity(), "Signing out");
         break;
       default:
-        toastMessage(getActivity(), "Time Line Fragment - Something is wrong :(");
+        info("Time Line Fragment - Something is wrong :(");
         break;
     }
     return true;
@@ -224,7 +217,7 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
      * TimeLineAdapter constructor
      *
      * @param context Context of where the adapter is constructed
-     * @param tweets  Arraylist of tweets
+     * @param tweets  ArrayList of tweets
      */
     private TimeLineAdapter(Context context, ArrayList<Tweet> tweets) {
       super(context, 0, tweets);
@@ -308,7 +301,6 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
             .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
               public void onClick(DialogInterface dialog, int which) {
                 // Close action bar
-                toastMessage(getActivity(), "Tweets not deleted");
                 action.finish();
               }
             })

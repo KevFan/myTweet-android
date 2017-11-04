@@ -42,7 +42,7 @@ public class TimeLineActivity extends AppCompatActivity {
 
   /**
    * Anonymous class listener for the new tweet floating action button
-   * Creates a new tweet and passes it as a serializable object to the intent for DetailTweetPagerActivity
+   * Starts the AddTweetActivity
    */
   private View.OnClickListener newTweetListener = new View.OnClickListener() {
     @Override

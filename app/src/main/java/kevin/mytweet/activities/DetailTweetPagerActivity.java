@@ -17,14 +17,13 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import static kevin.mytweet.helpers.LogHelpers.info;
 
 /**
- * Detail Tweet Activity
+ * Detail Tweet Paper Activity
  * Created by kevin on 16/10/2017.
  */
 
 public class DetailTweetPagerActivity extends BaseActivity {
   private ViewPager viewPager;
   private ArrayList<Tweet> tweetArrayList;
-  private PagerAdapter pagerAdapter;
 
   /**
    * Called when activity is first created - creates tweet fragment if savedBundleInstance is null
@@ -38,7 +37,7 @@ public class DetailTweetPagerActivity extends BaseActivity {
     viewPager.setId(R.id.viewPager);
     setContentView(viewPager);
     tweetArrayList = MyTweetApp.getApp().currentUser.timeLine.tweets;
-    pagerAdapter = new PagerAdapter(getSupportFragmentManager(), tweetArrayList);
+    PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager(), tweetArrayList);
     viewPager.setAdapter(pagerAdapter);
     setCurrentItem();
   }

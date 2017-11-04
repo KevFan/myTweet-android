@@ -60,7 +60,6 @@ public class SettingsFragment extends PreferenceFragment
   /**
    * Listener for changes in the shared preferences values through keys
    * Used to update user details through use of keys
-   * TODO: update email should perform checks such as valid email and used email
    *
    * @param sharedPreferences Shared preference object
    * @param key               Key to a shared preference field/value

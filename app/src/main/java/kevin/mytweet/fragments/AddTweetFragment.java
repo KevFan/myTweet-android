@@ -23,7 +23,7 @@ import static kevin.mytweet.helpers.LogHelpers.info;
 import static kevin.mytweet.helpers.LogHelpers.toastMessage;
 
 /**
- * Tweet Fragment - used to detail and add tweet
+ * Add Tweet Fragment - used to add tweet
  * Created by kevin on 20/10/2017.
  */
 
