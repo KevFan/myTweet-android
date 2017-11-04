@@ -16,7 +16,7 @@ import kevin.mytweet.models.Tweet;
 
 import static kevin.mytweet.helpers.ContactHelper.getContact;
 import static kevin.mytweet.helpers.ContactHelper.getEmail;
-import static kevin.mytweet.helpers.LogHelpers.info;
+import static kevin.mytweet.helpers.MessageHelpers.info;
 
 /**
  * Base Tweet Fragment to store common codebase between add tweet and detail tweet fragment such as

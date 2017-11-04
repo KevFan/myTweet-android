@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import static kevin.mytweet.helpers.IntentHelper.navigateUp;
-import static kevin.mytweet.helpers.LogHelpers.info;
+import static kevin.mytweet.helpers.MessageHelpers.info;
 
 /**
  * Base Activity to store common functionality such as navigate up

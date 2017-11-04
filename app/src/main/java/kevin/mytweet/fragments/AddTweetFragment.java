@@ -19,8 +19,8 @@ import kevin.mytweet.activities.TimeLineActivity;
 import kevin.mytweet.models.Tweet;
 
 import static kevin.mytweet.helpers.ContactHelper.sendEmail;
-import static kevin.mytweet.helpers.LogHelpers.info;
-import static kevin.mytweet.helpers.LogHelpers.toastMessage;
+import static kevin.mytweet.helpers.MessageHelpers.info;
+import static kevin.mytweet.helpers.MessageHelpers.toastMessage;
 
 /**
  * Add Tweet Fragment - used to add tweet

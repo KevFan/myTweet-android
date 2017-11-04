@@ -32,7 +32,7 @@ import kevin.mytweet.models.Tweet;
 import android.widget.AbsListView;
 import android.view.ActionMode;
 
-import static kevin.mytweet.helpers.LogHelpers.*;
+import static kevin.mytweet.helpers.MessageHelpers.*;
 
 /**
  * TimeLine Fragment - lists the user tweets using list fragment and custom adapter

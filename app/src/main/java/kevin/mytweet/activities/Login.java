@@ -9,8 +9,8 @@ import android.widget.TextView;
 import kevin.mytweet.R;
 import kevin.mytweet.app.MyTweetApp;
 
-import static kevin.mytweet.helpers.LogHelpers.info;
-import static kevin.mytweet.helpers.LogHelpers.toastMessage;
+import static kevin.mytweet.helpers.MessageHelpers.info;
+import static kevin.mytweet.helpers.MessageHelpers.toastMessage;
 
 /**
  * Login Activity to log in a user

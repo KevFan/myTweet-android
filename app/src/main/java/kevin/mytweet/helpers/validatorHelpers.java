@@ -3,7 +3,7 @@ package kevin.mytweet.helpers;
 import kevin.mytweet.app.MyTweetApp;
 import kevin.mytweet.models.User;
 
-import static kevin.mytweet.helpers.LogHelpers.info;
+import static kevin.mytweet.helpers.MessageHelpers.info;
 
 /**
  * Validator helpers used across more than one class

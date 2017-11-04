@@ -9,8 +9,8 @@ import kevin.mytweet.R;
 import kevin.mytweet.app.MyTweetApp;
 import kevin.mytweet.models.User;
 
-import static kevin.mytweet.helpers.LogHelpers.info;
-import static kevin.mytweet.helpers.LogHelpers.toastMessage;
+import static kevin.mytweet.helpers.MessageHelpers.info;
+import static kevin.mytweet.helpers.MessageHelpers.toastMessage;
 import static kevin.mytweet.helpers.validatorHelpers.*;
 
 /**

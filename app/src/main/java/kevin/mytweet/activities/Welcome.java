@@ -8,7 +8,7 @@ import android.widget.Button;
 
 import kevin.mytweet.R;
 
-import static kevin.mytweet.helpers.LogHelpers.toastMessage;
+import static kevin.mytweet.helpers.MessageHelpers.toastMessage;
 
 /**
  * Welcome Activity

@@ -23,7 +23,7 @@ import java.util.List;
 import kevin.mytweet.activities.TimeLineActivity;
 import kevin.mytweet.models.User;
 
-import static kevin.mytweet.helpers.LogHelpers.info;
+import static kevin.mytweet.helpers.MessageHelpers.info;
 
 /**
  * MyTweetApp - main application

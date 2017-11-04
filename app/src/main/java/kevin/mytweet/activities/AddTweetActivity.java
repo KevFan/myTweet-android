@@ -11,8 +11,8 @@ import kevin.mytweet.R;
 import kevin.mytweet.fragments.AddTweetFragment;
 
 import static kevin.mytweet.helpers.IntentHelper.navigateUp;
-import static kevin.mytweet.helpers.LogHelpers.dialogBox;
-import static kevin.mytweet.helpers.LogHelpers.info;
+import static kevin.mytweet.helpers.MessageHelpers.dialogBox;
+import static kevin.mytweet.helpers.MessageHelpers.info;
 
 
 /**

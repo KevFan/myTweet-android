@@ -11,7 +11,7 @@ import android.view.View;
 import kevin.mytweet.fragments.TimeLineFragment;
 import kevin.mytweet.R;
 
-import static kevin.mytweet.helpers.LogHelpers.info;
+import static kevin.mytweet.helpers.MessageHelpers.info;
 
 /**
  * TimeLine Activity of user

@@ -9,15 +9,17 @@ import android.widget.Toast;
 import kevin.mytweet.R;
 
 /**
- * Log Helpers
+ * Message Helpers
+ * Contains helpers are used across classes that logs messages to console or interact with application through toast
+ * or dialog box messages
  * Created by kevin on 13/10/2017.
  */
 
-public class LogHelpers {
+public class MessageHelpers {
   /**
    * Log messages and tag with "MyTweet"
    *
-   * @param message Message tp log
+   * @param message Message to log
    */
   public static void info(String message) {
     Log.v("MyTweet", message);

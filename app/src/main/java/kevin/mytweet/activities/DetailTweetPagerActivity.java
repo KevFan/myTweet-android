@@ -14,7 +14,7 @@ import kevin.mytweet.models.Tweet;
 
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import static kevin.mytweet.helpers.LogHelpers.info;
+import static kevin.mytweet.helpers.MessageHelpers.info;
 
 /**
  * Detail Tweet Paper Activity

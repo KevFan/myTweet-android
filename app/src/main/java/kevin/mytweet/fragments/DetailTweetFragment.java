@@ -14,7 +14,7 @@ import kevin.mytweet.R;
 import kevin.mytweet.models.Tweet;
 
 import static kevin.mytweet.helpers.ContactHelper.sendEmail;
-import static kevin.mytweet.helpers.LogHelpers.*;
+import static kevin.mytweet.helpers.MessageHelpers.*;
 
 /**
  * Detail Tweet Fragment - used to detail saved tweets

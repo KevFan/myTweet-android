@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import kevin.mytweet.fragments.SettingsFragment;
 
-import static kevin.mytweet.helpers.LogHelpers.info;
+import static kevin.mytweet.helpers.MessageHelpers.info;
 
 /**
  * Settings activity
