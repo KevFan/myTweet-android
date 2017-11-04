@@ -1,4 +1,5 @@
 # MyTweet Android
+![Welcome Activity][welcome] ![TimeLine Activity][timeline] ![Welcome Activity][addtweet]
 
 MyTweet android is a twitter/microblog app that allows users to write tweets with a max length of 140 characters. Each tweet are saved to the specific user timeline where the user has options to delete tweets by multi-long press select or all tweets through the clear option in the overflow menu. The user can select a contact and email the tweet content through a third party app such as Gmail.
 
@@ -21,10 +22,11 @@ MyTweet android is a twitter/microblog app that allows users to write tweets wit
 * SettingsActivity
   * Pairs with the SettingsFragment to use shared preference to update/maintain the current logged in user details
 
-The MyTweetApp loads a list of users if myTweetData.json if present.
+The MyTweetApp loads a list of users if myTweetData.json if present, and keeos track of the current user of during the application.
 
 ### Model & Persistence
 There are 3 models used in this project:
+
 * User - firstName, lastName, email, password, a timeline
 * TimeLine - an array list of tweets
 * Tweet - tweet message, tweet date
