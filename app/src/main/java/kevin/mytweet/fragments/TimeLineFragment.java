@@ -1,11 +1,14 @@
 package kevin.mytweet.fragments;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -258,9 +261,36 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
    */
   @Override
   public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+    // Action bar needs to be declared final to be accessed in inner dialog box class
+    final ActionMode action = actionMode;
     switch (menuItem.getItemId()) {
       case R.id.menu_item_delete_tweet:
-        deleteTweet(actionMode);
+        // Dialog box to confirm delete tweets
+        // https://stackoverflow.com/questions/2115758/how-do-i-display-an-alert-dialog-on-android
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+          builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+          builder = new AlertDialog.Builder(getActivity());
+        }
+        builder.setTitle("Delete tweets")
+            .setMessage("Are you sure you want to delete these tweets?")
+            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+              public void onClick(DialogInterface dialog, int which) {
+                // continue with delete
+                deleteTweet(action);
+                toastMessage(getActivity(), "Tweets deleted");
+              }
+            })
+            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+              public void onClick(DialogInterface dialog, int which) {
+                // Close action bar
+                toastMessage(getActivity(), "Tweets not deleted");
+                action.finish();
+              }
+            })
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .show();
         return true;
       default:
         return false;
