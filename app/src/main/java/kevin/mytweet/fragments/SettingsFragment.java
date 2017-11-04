@@ -10,6 +10,8 @@ import kevin.mytweet.app.MyTweetApp;
 import kevin.mytweet.models.User;
 
 import static kevin.mytweet.helpers.LogHelpers.info;
+import static kevin.mytweet.helpers.LogHelpers.toastMessage;
+import static kevin.mytweet.helpers.validatorHelpers.*;
 
 /**
  * Settings Fragment
@@ -66,23 +68,47 @@ public class SettingsFragment extends PreferenceFragment
   @Override
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
     User currentUser = MyTweetApp.getApp().currentUser;
-    info("Setting change - key : value = " + key + " : " + sharedPreferences.getString(key, ""));
+    String keyValue = sharedPreferences.getString(key, "");
+    info("Setting change - key : value = " + key + " : " + keyValue);
     switch (key) {
       case "firstName":
-        currentUser.firstName = sharedPreferences.getString(key, "");
+        if (keyValue.isEmpty()) {
+          toastMessage(getActivity(), "First name cannot be empty - change not saved");
+        } else {
+          currentUser.firstName = keyValue;
+        }
         break;
       case "lastName":
-        currentUser.lastName = sharedPreferences.getString(key, "");
+        if (keyValue.isEmpty()) {
+          toastMessage(getActivity(), "Last name cannot be empty - change not saved");
+        } else {
+          currentUser.lastName = keyValue;
+        }
         break;
       case "email":
-        currentUser.email = sharedPreferences.getString(key, "");
+        if (keyValue.isEmpty()) {
+          toastMessage(getActivity(), "Email cannot be empty - change not saved");
+        } else if (isEmailUsed(keyValue) && !keyValue.equals(currentUser.email)) {
+          toastMessage(getActivity(), "Email used by another user - change not saved");
+        } else if (!isValidEmail(keyValue)) {
+          toastMessage(getActivity(), "Email not in email format - change not saved");
+        } else {
+          currentUser.email = keyValue;
+        }
         break;
       case "password":
-        currentUser.password = sharedPreferences.getString(key, "");
+        if (keyValue.isEmpty()) {
+          toastMessage(getActivity(), "Password cannot be empty - change not saved");
+        } else {
+          currentUser.password = keyValue;
+        }
         break;
       default:
         info("Settings Fragment - Something went wrong in OnSharedPreferenceChanged :(");
+        break;
     }
+    // Ensures the current shared preference values are specific to user
+    MyTweetApp.getApp().setPreferenceSettings();
     MyTweetApp.getApp().save();
   }
 }

@@ -1,6 +1,5 @@
 package kevin.mytweet.models;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Random;
 
@@ -9,7 +8,7 @@ import java.util.Random;
  * Created by kevin on 13/10/2017.
  */
 
-public class Tweet implements Serializable {
+public class Tweet {
   public String tweetMessage;
   public Date tweetDate;
   public Long id;

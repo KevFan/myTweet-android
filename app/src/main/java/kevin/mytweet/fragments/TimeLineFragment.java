@@ -1,11 +1,14 @@
 package kevin.mytweet.fragments;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,8 +23,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import kevin.mytweet.R;
+import kevin.mytweet.activities.DetailTweetPagerActivity;
 import kevin.mytweet.activities.SettingsActivity;
-import kevin.mytweet.activities.TweetActivity;
 import kevin.mytweet.activities.TimeLineActivity;
 import kevin.mytweet.activities.Welcome;
 import kevin.mytweet.app.MyTweetApp;
@@ -100,10 +103,8 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
   @Override
   public void onListItemClick(ListView l, View view, int position, long id) {
     Tweet tweet = ((TimeLineAdapter) getListAdapter()).getItem(position);
-    Intent intent = new Intent(getActivity(), TweetActivity.class);
-//    intent.putExtra(TweetFragment.EXTRA_TWEET_ID, tweet.id);
-    intent.putExtra(TweetFragment.EXTRA_TWEET, tweet);
-    intent.putExtra(TweetFragment.EXTRA_VIEW_EDITABLE, false); // Set Edit view to read only
+    Intent intent = new Intent(getActivity(), DetailTweetPagerActivity.class);
+    intent.putExtra(DetailTweetFragment.EXTRA_TWEET_ID, tweet.id);
     startActivityForResult(intent, 0);
   }
 
@@ -123,11 +124,34 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
         break;
       // Deletes all tweets in the timeline of the current user and saves
       case R.id.clearTimeLine:
-        timeLine.tweets.clear();
-        app.save();
-        adapter.notifyDataSetChanged();
-        noTweetMessage.setVisibility(View.VISIBLE);
-        toastMessage(getActivity(), "All tweets cleared and deleted");
+        // Dialog box to confirm delete tweets
+        // https://stackoverflow.com/questions/2115758/how-do-i-display-an-alert-dialog-on-android
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+          builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+          builder = new AlertDialog.Builder(getActivity());
+        }
+        builder.setTitle("Delete all tweets")
+            .setMessage("Are you sure you want to delete all tweets in timeline?")
+            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+              public void onClick(DialogInterface dialog, int which) {
+                // continue with delete
+                timeLine.tweets.clear();
+                app.save();
+                adapter.notifyDataSetChanged();
+                noTweetMessage.setVisibility(View.VISIBLE);
+                toastMessage(getActivity(), "All tweets cleared and deleted");
+              }
+            })
+            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+              public void onClick(DialogInterface dialog, int which) {
+                // do nothing
+                toastMessage(getActivity(), "Tweets not deleted");
+              }
+            })
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .show();
         break;
       // Starts the settings activity
       case R.id.menuSettings:
@@ -186,7 +210,8 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
   @Override
   public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     Tweet tweet = adapter.getItem(position);
-    IntentHelper.startActivityWithData(getActivity(), TweetActivity.class, "TWEET_ID", tweet.id);
+    IntentHelper.startActivityWithData(getActivity(), DetailTweetPagerActivity.class,
+        DetailTweetFragment.EXTRA_TWEET_ID, tweet.id);
   }
 
   /**
@@ -259,9 +284,36 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
    */
   @Override
   public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+    // Action bar needs to be declared final to be accessed in inner dialog box class
+    final ActionMode action = actionMode;
     switch (menuItem.getItemId()) {
       case R.id.menu_item_delete_tweet:
-        deleteTweet(actionMode);
+        // Dialog box to confirm delete tweets
+        // https://stackoverflow.com/questions/2115758/how-do-i-display-an-alert-dialog-on-android
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+          builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+          builder = new AlertDialog.Builder(getActivity());
+        }
+        builder.setTitle("Delete tweets")
+            .setMessage("Are you sure you want to delete these tweets?")
+            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+              public void onClick(DialogInterface dialog, int which) {
+                // continue with delete
+                deleteTweet(action);
+                toastMessage(getActivity(), "Tweets deleted");
+              }
+            })
+            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+              public void onClick(DialogInterface dialog, int which) {
+                // Close action bar
+                toastMessage(getActivity(), "Tweets not deleted");
+                action.finish();
+              }
+            })
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .show();
         return true;
       default:
         return false;

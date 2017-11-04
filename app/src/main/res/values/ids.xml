@@ -2,4 +2,5 @@
 <resources>
     <item name="masked" type="id"/>
     <item name="visible" type="id"/> // https://stackoverflow.com/questions/41303347/couldnt-resolve-resource-id-visible-when-using-textinputlayout
+    <item type="id" name="viewPager" />
 </resources>

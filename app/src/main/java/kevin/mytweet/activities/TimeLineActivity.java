@@ -8,12 +8,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import java.util.Date;
-
 import kevin.mytweet.fragments.TimeLineFragment;
 import kevin.mytweet.R;
-import kevin.mytweet.fragments.TweetFragment;
-import kevin.mytweet.models.Tweet;
 
 import static kevin.mytweet.helpers.LogHelpers.info;
 
@@ -46,18 +42,12 @@ public class TimeLineActivity extends AppCompatActivity {
 
   /**
    * Anonymous class listener for the new tweet floating action button
-   * Creates a new tweet and passes it as a serializable object to the intent for TweetActivity
+   * Creates a new tweet and passes it as a serializable object to the intent for DetailTweetPagerActivity
    */
   private View.OnClickListener newTweetListener = new View.OnClickListener() {
     @Override
     public void onClick(View view) {
-      Tweet tweet = new Tweet("", new Date());
-//        MyTweetApp.getApp().currentUser.timeLine.addTweet(tweet);
-      Intent intent = new Intent(view.getContext(), TweetActivity.class);
-      intent.putExtra(TweetFragment.EXTRA_TWEET, tweet);
-//        intent.putExtra(TweetFragment.EXTRA_TWEET_ID, tweet.id);
-      intent.putExtra(TweetFragment.EXTRA_VIEW_EDITABLE, true); // Set Edit view to editable
-      startActivityForResult(intent, 0);
+      startActivity(new Intent(view.getContext(), AddTweetActivity.class));
     }
   };
 }

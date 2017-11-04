@@ -13,6 +13,7 @@ import kevin.mytweet.models.User;
 
 import static kevin.mytweet.helpers.LogHelpers.info;
 import static kevin.mytweet.helpers.LogHelpers.toastMessage;
+import static kevin.mytweet.helpers.validatorHelpers.*;
 
 /**
  * Sign up Activity to register a new user
@@ -71,28 +72,4 @@ public class SignUp extends BaseActivity {
       }
     }
   };
-
-  /**
-   * Checks string is in a valid email format
-   * https://stackoverflow.com/questions/31262250/how-to-check-whether-email-is-valid-format-or-not-in-android
-   * @param target String to check
-   * @return Boolean of if target string passed is in a valid email format
-   */
-  private boolean isValidEmail(String target) {
-    return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
-  }
-
-  /**
-   * Check is email already used by a user
-   * @param email email to check for
-   * @return Boolean of if email is already used
-   */
-  private boolean isEmailUsed(String email) {
-    for (User user : app.users) {
-      if (user.email.equals(email)) {
-        return true;
-      }
-    }
-    return false;
-  }
 }
