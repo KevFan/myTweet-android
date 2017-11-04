@@ -116,18 +116,22 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
     switch (item.getItemId()) {
       // Deletes all tweets in the timeline of the current user and saves
       case R.id.clearTimeLine:
-        // Dialog box to confirm delete tweets
-        dialogBox(getActivity(), "Delete all tweets", "Are you sure you want to delete all tweets in timeline?",
-            null, new DialogInterface.OnClickListener() {
-              public void onClick(DialogInterface dialog, int which) {
-                // continue with delete
-                timeLine.tweets.clear();
-                app.save();
-                adapter.notifyDataSetChanged();
-                noTweetMessage.setVisibility(View.VISIBLE);
-                toastMessage(getActivity(), "All tweets cleared and deleted");
-              }
-            });
+        if (timeLine.tweets.isEmpty()) {
+          toastMessage(getActivity(), "Have no tweets to delete!!");
+        } else {
+          // Dialog box to confirm delete tweets
+          dialogBox(getActivity(), "Delete all tweets", "Are you sure you want to delete all tweets in timeline?",
+              null, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                  // continue with delete
+                  timeLine.tweets.clear();
+                  app.save();
+                  adapter.notifyDataSetChanged();
+                  noTweetMessage.setVisibility(View.VISIBLE);
+                  toastMessage(getActivity(), "All tweets cleared and deleted");
+                }
+              });
+        }
         break;
       // Starts the settings activity
       case R.id.menuSettings:
