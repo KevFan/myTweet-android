@@ -124,11 +124,34 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
         break;
       // Deletes all tweets in the timeline of the current user and saves
       case R.id.clearTimeLine:
-        timeLine.tweets.clear();
-        app.save();
-        adapter.notifyDataSetChanged();
-        noTweetMessage.setVisibility(View.VISIBLE);
-        toastMessage(getActivity(), "All tweets cleared and deleted");
+        // Dialog box to confirm delete tweets
+        // https://stackoverflow.com/questions/2115758/how-do-i-display-an-alert-dialog-on-android
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+          builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+          builder = new AlertDialog.Builder(getActivity());
+        }
+        builder.setTitle("Delete all tweets")
+            .setMessage("Are you sure you want to delete all tweets in timeline?")
+            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+              public void onClick(DialogInterface dialog, int which) {
+                // continue with delete
+                timeLine.tweets.clear();
+                app.save();
+                adapter.notifyDataSetChanged();
+                noTweetMessage.setVisibility(View.VISIBLE);
+                toastMessage(getActivity(), "All tweets cleared and deleted");
+              }
+            })
+            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+              public void onClick(DialogInterface dialog, int which) {
+                // do nothing
+                toastMessage(getActivity(), "Tweets not deleted");
+              }
+            })
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .show();
         break;
       // Starts the settings activity
       case R.id.menuSettings:
