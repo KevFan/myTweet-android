@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import kevin.mytweet.R;
 import kevin.mytweet.app.MyTweetApp;
@@ -23,13 +24,14 @@ import static kevin.mytweet.helpers.MessageHelpers.info;
 
 public class DetailTweetPagerActivity extends BaseActivity {
   private ViewPager viewPager;
-  private ArrayList<Tweet> tweetArrayList;
+  private List<Tweet> tweetArrayList;
 
   /**
    * Called when activity is first created - creates tweet fragment if savedBundleInstance is null
    *
    * @param savedInstanceState Bundle with saved data if any
    */
+  @Override
   public void onCreate(Bundle savedInstanceState) {
     info("Detail Tweet Activity created");
     super.onCreate(savedInstanceState);
@@ -61,7 +63,7 @@ public class DetailTweetPagerActivity extends BaseActivity {
    * Pager adapter
    */
   class PagerAdapter extends FragmentStatePagerAdapter {
-    private ArrayList<Tweet> tweetArrayList;
+    private List<Tweet> tweetArrayList;
 
     /**
      * PagerAdapter constructor
@@ -69,7 +71,7 @@ public class DetailTweetPagerActivity extends BaseActivity {
      * @param fm             Fragment manager
      * @param tweetArrayList ArrayList of tweets
      */
-    private PagerAdapter(FragmentManager fm, ArrayList<Tweet> tweetArrayList) {
+    private PagerAdapter(FragmentManager fm, List<Tweet> tweetArrayList) {
       super(fm);
       this.tweetArrayList = tweetArrayList;
     }

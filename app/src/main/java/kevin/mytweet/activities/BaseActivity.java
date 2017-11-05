@@ -15,6 +15,7 @@ import static kevin.mytweet.helpers.MessageHelpers.info;
 public class BaseActivity extends AppCompatActivity {
   /**
    * Called when activity is first created
+   *
    * @param savedInstanceState Bundle with saved data if any
    */
   @Override
@@ -26,17 +27,18 @@ public class BaseActivity extends AppCompatActivity {
 
   /**
    * Menu Item selector - only used for navigate up to previous activity here
+   *
    * @param item Menu item
    * @return Boolean
    */
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     info("Base Activity - navigated up pressed");
-    switch (item.getItemId()) {
-      case android.R.id.home:
-        navigateUp(this);
-        return true;
+    if (item.getItemId() == android.R.id.home) {
+      navigateUp(this);
+      return true;
+    } else{
+      return super.onOptionsItemSelected(item);
     }
-    return super.onOptionsItemSelected(item);
   }
 }

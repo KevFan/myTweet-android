@@ -51,17 +51,17 @@ public class AddTweetActivity extends BaseActivity {
   public boolean onOptionsItemSelected(MenuItem item) {
     info("Add Tweet Activity - navigated up pressed");
     final Activity activity = this;
-    switch (item.getItemId()) {
-      case android.R.id.home:
-        dialogBox(this, "Tweet not saved !!", "Return to timeline and discard tweet?",
-            null, new DialogInterface.OnClickListener() {
-              public void onClick(DialogInterface arg0, int arg1) {
-                navigateUp(activity);
-              }
-            });
-        return true;
+    if (item.getItemId() == android.R.id.home) {
+      dialogBox(this, "Tweet not saved !!", "Return to timeline and discard tweet?",
+          null, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+              navigateUp(activity);
+            }
+          });
+      return true;
+    } else {
+      return super.onOptionsItemSelected(item);
     }
-    return super.onOptionsItemSelected(item);
   }
 
   /**

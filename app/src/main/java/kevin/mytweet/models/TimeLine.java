@@ -1,6 +1,7 @@
 package kevin.mytweet.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * TimeLine model - contains an ArrayList of tweets
@@ -8,7 +9,7 @@ import java.util.ArrayList;
  */
 
 public class TimeLine {
-  public ArrayList<Tweet> tweets;
+  public List<Tweet> tweets;
 
   /**
    * TimeLine constructor

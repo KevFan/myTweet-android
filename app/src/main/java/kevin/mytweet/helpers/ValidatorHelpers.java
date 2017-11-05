@@ -11,7 +11,7 @@ import static kevin.mytweet.helpers.MessageHelpers.info;
  * Created by kevin on 04/11/2017.
  */
 
-public class validatorHelpers {
+public class ValidatorHelpers {
   /**
    * Checks string is in a valid email format
    * https://stackoverflow.com/questions/31262250/how-to-check-whether-email-is-valid-format-or-not-in-android
@@ -28,10 +28,12 @@ public class validatorHelpers {
    * @return Boolean of if email is already used
    */
   public static boolean isEmailUsed(String email) {
-    for (User user : MyTweetApp.getApp().users) {
-      info(user.email);
-      if (user.email.equals(email)) {
-        return true;
+    if (MyTweetApp.getApp().users != null) {
+      for (User user : MyTweetApp.getApp().users) {
+        info(user.email);
+        if (user.email.equals(email)) {
+          return true;
+        }
       }
     }
     return false;

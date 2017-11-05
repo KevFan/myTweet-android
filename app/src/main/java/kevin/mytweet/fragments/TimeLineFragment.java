@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import kevin.mytweet.R;
 import kevin.mytweet.activities.DetailTweetPagerActivity;
@@ -169,8 +170,8 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
    * Whenever the fragment is paused, check should the no tweets message be visible or not
    */
   @Override
-  public void onPause() {
-    super.onPause();
+  public void onResume() {
+    super.onResume();
     if (!timeLine.tweets.isEmpty()) {
       noTweetMessage.setVisibility(View.INVISIBLE);
     } else {
@@ -205,7 +206,7 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
      * @param context Context of where the adapter is constructed
      * @param tweets  ArrayList of tweets
      */
-    private TimeLineAdapter(Context context, ArrayList<Tweet> tweets) {
+    private TimeLineAdapter(Context context, List<Tweet> tweets) {
       super(context, 0, tweets);
       this.context = context;
     }
@@ -265,25 +266,24 @@ public class TimeLineFragment extends ListFragment implements AdapterView.OnItem
   public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
     // Action bar needs to be declared final to be accessed in inner dialog box class
     final ActionMode action = actionMode;
-    switch (menuItem.getItemId()) {
-      case R.id.menu_item_delete_tweet:
-        // Dialog box to confirm delete tweets
-        dialogBox(getActivity(), "Delete tweets", "Are you sure you want to delete these tweets?",
-            new DialogInterface.OnClickListener() {
-              public void onClick(DialogInterface dialog, int which) {
-                // Close action bar
-                action.finish();
-              }
-            }, new DialogInterface.OnClickListener() {
-              public void onClick(DialogInterface dialog, int which) {
-                // continue with delete
-                deleteTweet(action);
-                toastMessage(getActivity(), "Tweets deleted");
-              }
-            });
-        return true;
-      default:
-        return false;
+    if (menuItem.getItemId() == R.id.menu_item_delete_tweet) {
+      // Dialog box to confirm delete tweets
+      dialogBox(getActivity(), "Delete tweets", "Are you sure you want to delete these tweets?",
+          new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+              // Close action bar
+              action.finish();
+            }
+          }, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+              // continue with delete
+              deleteTweet(action);
+              toastMessage(getActivity(), "Tweets deleted");
+            }
+          });
+      return true;
+    } else {
+      return false;
     }
   }
 

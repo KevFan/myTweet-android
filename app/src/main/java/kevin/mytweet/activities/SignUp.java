@@ -13,7 +13,7 @@ import kevin.mytweet.models.User;
 
 import static kevin.mytweet.helpers.MessageHelpers.info;
 import static kevin.mytweet.helpers.MessageHelpers.toastMessage;
-import static kevin.mytweet.helpers.validatorHelpers.*;
+import static kevin.mytweet.helpers.ValidatorHelpers.*;
 
 /**
  * Sign up Activity to register a new user
@@ -41,7 +41,7 @@ public class SignUp extends BaseActivity {
     lastName = (TextView) findViewById(R.id.lastName);
     email = (TextView) findViewById(R.id.email);
     password = (TextView) findViewById(R.id.password);
-    app = (MyTweetApp) getApplication();
+    app = MyTweetApp.getApp();
     Button signup = (Button) findViewById(R.id.signupMyTweet);
     signup.setOnClickListener(signupListener);
   }

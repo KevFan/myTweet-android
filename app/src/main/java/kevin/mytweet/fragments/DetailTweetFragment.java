@@ -33,6 +33,7 @@ public class DetailTweetFragment extends BaseTweetFragment implements View.OnCli
    *
    * @param savedInstanceState Bundle with saved data if any
    */
+  @Override
   public void onCreate(Bundle savedInstanceState) {
     info("Detail Tweet Fragment created");
     super.onCreate(savedInstanceState);

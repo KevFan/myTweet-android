@@ -39,6 +39,7 @@ public class BaseTweetFragment extends Fragment {
    *
    * @param savedInstanceState Bundle with saved data if any
    */
+  @Override
   public void onCreate(Bundle savedInstanceState) {
     info("Base Tweet Fragment created");
     super.onCreate(savedInstanceState);
@@ -62,11 +63,9 @@ public class BaseTweetFragment extends Fragment {
 
     // If request code is the request contact, set the intent to data passed in and check
     // for permissions
-    switch (requestCode) {
-      case REQUEST_CONTACT:
-        this.data = data;
-        checkContactsReadPermission();
-        break;
+    if (requestCode == REQUEST_CONTACT) {
+      this.data = data;
+      checkContactsReadPermission();
     }
   }
 
@@ -109,14 +108,11 @@ public class BaseTweetFragment extends Fragment {
   @Override
   public void onRequestPermissionsResult(int requestCode, String permissions[],
                                          int[] grantResults) {
-    switch (requestCode) {
-      case REQUEST_CONTACT: {
-        // If request is cancelled, the result arrays are empty.
-        if (grantResults.length > 0
-            && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-          // permission was granted
-          readContact();
-        }
+    if (requestCode == REQUEST_CONTACT) {
+      if (grantResults.length > 0
+          && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        // permission was granted
+        readContact();
       }
     }
   }

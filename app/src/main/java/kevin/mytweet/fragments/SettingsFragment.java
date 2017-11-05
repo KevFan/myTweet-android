@@ -11,7 +11,7 @@ import kevin.mytweet.models.User;
 
 import static kevin.mytweet.helpers.MessageHelpers.info;
 import static kevin.mytweet.helpers.MessageHelpers.toastMessage;
-import static kevin.mytweet.helpers.validatorHelpers.*;
+import static kevin.mytweet.helpers.ValidatorHelpers.*;
 
 /**
  * Settings Fragment

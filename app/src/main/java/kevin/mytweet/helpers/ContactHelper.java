@@ -7,6 +7,8 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.content.ContentResolver;
 
+import static kevin.mytweet.helpers.MessageHelpers.info;
+
 /**
  * Contact Helper methods
  * Created by kevin on 19/10/2017.
@@ -38,6 +40,7 @@ public class ContactHelper {
         email = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
         emails.close();
       } catch (Exception e) {
+        info(e.toString());
       }
     }
     return email;

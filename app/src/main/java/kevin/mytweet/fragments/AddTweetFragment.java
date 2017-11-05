@@ -15,7 +15,6 @@ import android.widget.TextView;
 import java.util.Date;
 
 import kevin.mytweet.R;
-import kevin.mytweet.activities.TimeLineActivity;
 import kevin.mytweet.models.Tweet;
 
 import static kevin.mytweet.helpers.ContactHelper.sendEmail;
@@ -38,6 +37,7 @@ public class AddTweetFragment extends BaseTweetFragment implements View.OnClickL
    *
    * @param savedInstanceState Bundle with saved data if any
    */
+  @Override
   public void onCreate(Bundle savedInstanceState) {
     info("Add Tweet Fragment created");
     super.onCreate(savedInstanceState);

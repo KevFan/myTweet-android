@@ -42,6 +42,7 @@ public class MyTweetApp extends Application {
    * If the last previous logged in user, haven't logged out, their details are still in shared
    * preferences, try to log the user in instead of starting the welcome activity
    */
+  @Override
   public void onCreate() {
     super.onCreate();
     info("MyTweet App Started");
