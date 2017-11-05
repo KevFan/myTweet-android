@@ -108,7 +108,9 @@ public class AddTweetFragment extends BaseTweetFragment implements View.OnClickL
           timeLine.addTweet(tweet);
           app.save();
           toastMessage(getActivity(), "Message Sent !! ");
-          startActivity(new Intent(getActivity(), TimeLineActivity.class));
+          // Finish the activity to reload timeline activity and prevents adding the add tweet
+          // to the back stack
+          getActivity().finish();
         }
         break;
       case R.id.selectContactButton:
