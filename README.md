@@ -49,4 +49,8 @@ The DX is designed to have miminal code duplication between activities and betwe
 Kevin Fan ([KevFan](https://github.com/KevFan)) - 20077688
 
 ## Version/Date:
-12th October 2017
+5th November 2017
+
+[welcome]: ./readme_resources/welcome.jpg
+[timeline]: ./readme_resources/timeline.jpg
+[addtweet]: ./readme_resources/addtweet.jpg
